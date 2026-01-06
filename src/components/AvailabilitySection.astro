@@ -1,0 +1,110 @@
+---
+import PlusBox from "./elements/PlusBox.astro";
+import Button from "./elements/Button.astro";
+---
+
+<section class="availability-section">
+  <h2>Now <span class="gradient-text">booking</span></h2>
+  <PlusBox variant="all" class="availability-section__text">
+    <p class="date-text gradient-text">April–June 2026</p>
+    <p class="slots-pill"><span class="gradient-text">2</span> project slots open</p>
+    <p class="availability-section__description">
+      I work with a small number of clients at a time so I can actually stay involved in the product, not just hand off
+      tickets. If you’ve got a serious project and a clear business need, let’s talk.
+    </p>
+  </PlusBox>
+  <Button class="availability-section__action">Sounds good, let's talk!</Button>
+</section>
+
+<style lang="scss">
+  @property --shimmer-angle {
+    syntax: "<angle>";
+    initial-value: 0deg;
+    inherits: false;
+  }
+
+  @keyframes shimmer-rotate {
+    from {
+      --shimmer-angle: 0deg;
+    }
+    to {
+      --shimmer-angle: 360deg;
+    }
+  }
+
+  .availability-section {
+    text-align: center;
+    padding: 4rem 0;
+    overflow: hidden;
+
+    @media (min-width: 1200px) {
+      overflow: visible;
+    }
+
+    &__text {
+      margin-bottom: 2rem;
+      padding: 2rem;
+    }
+
+    &__description {
+      max-width: 800px;
+      margin: 1rem auto 0;
+    }
+
+    &__action {
+      width: 240px;
+      margin: 2rem auto 0;
+    }
+
+    h2 {
+      margin-bottom: 2rem;
+    }
+
+    .date-text {
+      font-size: 1.5rem;
+      font-weight: 900;
+    }
+
+    .slots-pill {
+      --shimmer-color: var(--primary);
+      --shimmer-highlight: #fff;
+      --border-width: 1px;
+
+      font-family: "Funnel Display", sans-serif;
+      font-size: 1.5rem;
+      display: inline-block;
+      padding: 0.5rem 2rem;
+      border-radius: 10rem;
+      font-weight: 900;
+      margin-top: 2rem;
+      position: relative;
+      background: var(--background-light);
+      z-index: 0;
+
+      &::before {
+        content: "";
+        position: absolute;
+        inset: calc(var(--border-width) * -1);
+        border-radius: inherit;
+        background: conic-gradient(
+            from var(--shimmer-angle, 0deg),
+            var(--shimmer-color) 0%,
+            var(--shimmer-highlight) 12.5%,
+            var(--shimmer-color) 25%,
+            var(--shimmer-color) 100%
+        );
+        z-index: -1;
+        animation: shimmer-rotate 4s linear infinite;
+      }
+
+      &::after {
+        content: "";
+        position: absolute;
+        inset: var(--border-width);
+        border-radius: inherit;
+        background: var(--background-light);
+        z-index: -1;
+      }
+    }
+  }
+</style>

@@ -6,7 +6,7 @@
   padding: 2rem;
 
   .card-item {
-    flex: 0 0 60%;
+    flex: 0 0 90%;
     scroll-snap-align: start;
     min-height: 300px;
     display: flex;
@@ -28,17 +28,6 @@
 
     @media (min-width: 768px) {
       flex: 1 1 calc(33.333% - 0.666rem)
-    }
-  }
-
-  &.two-columns {
-    flex-wrap: wrap;
-    .card-item {
-      flex: 0 0 80%;
-
-      @media (min-width: 768px) {
-        flex: 1 1 calc(50% - 0.5rem) !important;
-      }
     }
   }
 }

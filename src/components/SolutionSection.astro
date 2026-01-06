@@ -185,39 +185,79 @@ import PlusBox from "./elements/PlusBox.astro";
       position: sticky;
       top: 64px;
 
+      .sticky-card__content {
+        min-height: calc(100vh - 64px);
+      }
+
       @media (min-width: 768px) {
         top: 10vh;
+
+        .sticky-card__content {
+          min-height: 90vh;
+        }
       }
 
       &:nth-of-type(2) {
         top: calc(64px + 4vh);
 
+        .sticky-card__content {
+          min-height: calc(100vh - 64px - 4vh);
+        }
+
         @media (min-width: 768px) {
           top: 16vh;
+
+          .sticky-card__content {
+            min-height: 84vh;
+          }
         }
       }
 
       &:nth-of-type(3) {
         top: calc(64px + 8vh);
 
+        .sticky-card__content {
+          min-height: calc(100vh - 64px - 8vh);
+        }
+
         @media (min-width: 768px) {
           top: 22vh;
+
+          .sticky-card__content {
+            min-height: 78vh;
+          }
         }
       }
 
       &:nth-of-type(4) {
         top: calc(64px + 12vh);
 
+        .sticky-card__content {
+          min-height: calc(100vh - 64px - 12vh);
+        }
+
         @media (min-width: 768px) {
           top: 28vh;
+
+          .sticky-card__content {
+            min-height: 72vh;
+          }
         }
       }
 
       &:nth-of-type(5) {
         top: calc(64px + 16vh);
 
+        .sticky-card__content {
+          min-height: calc(100vh - 64px - 16vh);
+        }
+
         @media (min-width: 768px) {
           top: 34vh;
+
+          .sticky-card__content {
+            min-height: 66vh;
+          }
         }
       }
 
@@ -245,11 +285,12 @@ import PlusBox from "./elements/PlusBox.astro";
       }
 
       &__content {
-        padding: 0.25rem 0.5rem 3rem;
+        padding: 0.25rem 0.5rem;
         display: flex;
         flex-direction: column;
-        gap: 1.5rem;
+        gap: 2rem;
         background-color: var(--background-light);
+        overflow: auto;
 
         p {
           font-weight: bold;
@@ -269,13 +310,14 @@ import PlusBox from "./elements/PlusBox.astro";
         }
 
         .features-image {
-          max-height: 12vh;
+          max-height: 20vh;
           object-fit: cover;
         }
 
         .hologram-card {
-          height: 12vh;
+          height: 20vh;
           min-height: unset;
+          border-radius: calc(var(--radius) * 4);
 
           &::before {
             mix-blend-mode: screen;
@@ -293,6 +335,8 @@ import PlusBox from "./elements/PlusBox.astro";
 
         @media (min-width: 1024px) {
           flex-direction: row;
+          align-items: center;
+          gap: 1.5rem;
 
           .features-list {
             flex: 1 1 70%;

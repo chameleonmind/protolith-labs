@@ -1,0 +1,282 @@
+---
+import GradientBorder from "./elements/GradientBorder.astro";
+---
+<section class="how">
+  <div class="how__heading" aria-hidden="true">
+    <h2>From first call to <span class="gradient-text">shipped release</span></h2>
+    <p>
+      <strong>Good products aren’t built by accident.</strong><br>
+      From the first call to the shipped release, each step is deliberate,
+      transparent, and designed to move the product forward without unnecessary complexity.
+    </p>
+  </div>
+  <ul class="how__steps">
+    <GradientBorder as="li">
+      <div class="how__steps--inner">
+        <div class="how__steps--wrapper">
+          <h3>Discovery</h3>
+          <div class="how__steps--content">
+            <span class="ordinal">01</span>
+            <p>We talk through your product, constraints, and what success looks like. I ask annoying but necessary
+              questions.</p>
+          </div>
+        </div>
+      </div>
+    </GradientBorder>
+    <GradientBorder as="li">
+      <div class="how__steps--inner">
+        <div class="how__steps--wrapper">
+          <h3>Proposal & Scope</h3>
+          <div class="how__steps--content">
+            <span class="ordinal">02</span>
+            <p>You get a clear scope, timeline, and pricing model (fixed, phase-based, or retainer). No mystery
+              billing.</p>
+          </div>
+        </div>
+      </div>
+    </GradientBorder>
+    <GradientBorder as="li">
+      <div class="how__steps--inner">
+        <div class="how__steps--wrapper">
+          <h3>Build & Iterate</h3>
+          <div class="how__steps--content">
+            <span class="ordinal">03</span>
+            <p>Design, implementation, and short feedback loops. Frequent check-ins, working software early, not a big
+              reveal at the end.</p>
+          </div>
+        </div>
+      </div>
+    </GradientBorder>
+    <GradientBorder as="li">
+      <div class="how__steps--inner">
+        <div class="how__steps--wrapper">
+          <h3>Handoff & Support</h3>
+          <div class="how__steps--content">
+            <span class="ordinal">04</span>
+            <p>Documentation, walkthroughs, and support options so your team isn’t lost when we’re done.</p>
+          </div>
+        </div>
+      </div>
+    </GradientBorder>
+  </ul>
+</section>
+
+<style lang="scss">
+  .how {
+    padding: 4rem 0;
+    overflow: hidden;
+
+    @media (min-width: 1200px) {
+      overflow: visible;
+    }
+
+    &__heading {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      padding: 0 2rem;
+
+      h2 {
+        flex: 1 1 auto;
+        color: var(--primary);
+        text-align: center;
+        text-wrap-style: pretty;
+
+        @media (min-width: 768px) {
+          text-align: left;
+          flex: 1 1 40%;
+          max-width: 40%;
+        }
+      }
+
+      p {
+        flex: 1 1 auto;
+        text-align: center;
+
+        @media (min-width: 768px) {
+          text-align: left;
+          flex: 1 1 60%;
+          max-width: 60%;
+        }
+
+        strong {
+          color: var(--primary);
+        }
+      }
+
+      @media (min-width: 768px) {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+      }
+    }
+
+    &__steps {
+      position: relative;
+      margin-top: 3rem;
+      min-height: 100vh;
+      padding: 0 1rem;
+
+      @media (min-width: 768px) {
+        padding: 0;
+      }
+
+      li {
+        position: relative;
+        width: 100%;
+        /*width: 75%;*/
+        cursor: default;
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        margin-bottom: 1rem;
+
+        @media (min-width: 768px) {
+          position: absolute;
+          width: 45%;
+          aspect-ratio: 1/1;
+          margin-bottom: 0;
+        }
+
+        &:nth-child(1) {
+          /*top: 0;*/
+          /*left: 1rem;*/
+
+          @media (min-width: 768px) {
+            top: 0;
+            left: 0;
+          }
+
+          .how__steps--inner::after {
+            background: url("../assets/images/service_glass_1.png");
+          }
+        }
+
+        &:nth-child(2) {
+          /*top: 10%;*/
+          /*right: 1rem;*/
+
+          @media (min-width: 768px) {
+            top: 10%;
+            right: auto;
+            left: 18.33334%;
+          }
+
+          .how__steps--inner::after {
+            background: url("../assets/images/service_glass_2.png");
+          }
+        }
+
+        &:nth-child(3) {
+          /*top: 20%;*/
+          /*left: 2rem;*/
+
+          @media (min-width: 768px) {
+            top: 20%;
+            left: 36.66667%;
+          }
+
+          .how__steps--inner::after {
+            background: url("../assets/images/service_glass_3.png");
+          }
+        }
+
+        &:nth-child(4) {
+          /*top: 30%;*/
+          /*right: 2rem;*/
+
+          @media (min-width: 768px) {
+            top: 30%;
+            right: auto;
+            left: 55%;
+          }
+
+          .how__steps--inner::after {
+            background: url("../assets/images/service_glass_4.png");
+          }
+        }
+
+        &:hover {
+          z-index: 99;
+
+          .how__steps--inner::after {
+            opacity: 0.75;
+          }
+        }
+      }
+
+      &--inner {
+        border-radius: calc(1rem - 1px);
+        overflow: hidden;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        font-size: 1.5rem;
+        background-color: var(--background-light);
+        position: relative;
+        z-index: 0;
+
+        &::after {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          border-radius: calc(1rem - 1px);
+          z-index: 1;
+          opacity: 0.35;
+          transition: opacity 0.3s ease;
+        }
+
+        > * {
+          position: relative;
+          z-index: 2;
+        }
+
+        h3 {
+          font-size: 2.2rem;
+          padding: 0 1rem;
+          margin-bottom: 1rem;
+          font-weight: 900;
+          color: var(--primary);
+          text-transform: uppercase;
+        }
+      }
+
+      &--wrapper {
+        padding-top: 10rem;
+        background: linear-gradient(180deg, transparent 0%, var(--background-light) 100%)
+      }
+
+      &--content {
+        display: flex;
+        align-items: center;
+        padding-bottom: 1rem;
+
+        .ordinal {
+          font-size: 3rem;
+          line-height: 1;
+          font-family: "Funnel Display", sans-serif;
+          font-weight: 900;
+          padding: 0 0.5rem 0 1rem;
+          border-right: 1px solid var(--text-color);
+          color: var(--primary);
+
+          @media (min-width: 768px) {
+            font-size: 5rem;
+          }
+        }
+
+        p {
+          padding: 0 0.5rem;
+          font-weight: bold;
+          font-size: 1rem;
+
+          @media (min-width: 768px) {
+            font-size: 1rem;
+          }
+        }
+      }
+    }
+  }
+</style>

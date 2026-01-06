@@ -22,7 +22,7 @@ const {
     // { href: '/contact', label: 'Contact' },
   ],
   shrinkAfterPx = 200,
-  maxWidthPx = 1180,
+  maxWidthPx = 1200,
 } = Astro.props as Props
 
 const id = `sticky-header-${Math.random().toString(36).slice(2)}`
@@ -245,7 +245,7 @@ const id = `sticky-header-${Math.random().toString(36).slice(2)}`
     const menu = header.querySelector('.sticky-header__menu')
 
     const shrinkAfter = Number(header.dataset.shrinkAfter || '200')
-    const maxWidth = Number(header.dataset.maxWidth || '1180')
+    const maxWidth = Number(header.dataset.maxWidth || '1200')
 
     header.style.setProperty('--header-max', `${maxWidth}px`)
 
