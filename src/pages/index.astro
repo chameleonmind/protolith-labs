@@ -1,11 +1,146 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import "../assets/styles/reset.scss";
+import "../assets/styles/variables.scss";
+import "../assets/styles/typography.scss";
+import "../assets/styles/cards-grid.scss";
+import "../assets/styles/hologram-cards.scss";
+import Layout from "../layouts/Layout.astro";
+import Hero from "../components/Hero.astro";
+import PageContainer from "../components/PageContainer.astro";
+import StickyHeader from "../components/StickyHeader.astro";
+import ProblemSection from "../components/ProblemSection.astro";
+import SolutionSection from "../components/SolutionSection.astro";
+import TechnologySection from "../components/TechnologySection.astro";
+import Footer from "../components/Footer.astro";
 ---
 
 <Layout>
-	<Welcome />
+  <StickyHeader />
+  <main>
+    <PageContainer>
+      <Hero />
+      <ProblemSection />
+      <SolutionSection />
+      <TechnologySection />
+    </PageContainer>
+  </main>
+  <Footer />
 </Layout>
+
+<style>
+  main {
+    display: block;
+    width: 100%;
+    background-image: linear-gradient(90deg, var(--background-darker) 0%, var(--background-light) 50%, var(--background-darker) 100%);
+    position: relative;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100dvh;
+      background: radial-gradient(circle at 20% 20%, var(--accent-color), transparent 50%), radial-gradient(circle at 80% 80%, var(--highlight-color), transparent 50%);
+      background-blend-mode: screen;
+      backdrop-filter: blur(20px);
+      z-index: 0;
+      opacity: 0.15;
+    }
+
+    > * {
+      position: relative;
+      z-index: 1;
+    }
+  }
+</style>
+
+<script>
+  import { clamp } from "../utils";
+
+  function initCardHolograms () {
+    const prefersReduced = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
+    if (prefersReduced) return;
+
+    const cards = document.querySelectorAll<HTMLElement>(".hologram-card");
+
+    for (const el of cards) {
+      const iconUrl = el.getAttribute("data-icon-url");
+      if (iconUrl) el.style.setProperty("--icon-url", `url("${iconUrl}")`);
+
+      let raf = 0;
+      let targetRx = 0;
+      let targetRy = 0;
+      let targetMx = 50;
+      let targetMy = 50;
+      let targetGlare = 0;
+
+      let rx = 0;
+      let ry = 0;
+      let mx = 50;
+      let my = 50;
+      let glare = 0;
+
+      const maxTilt = Number.parseFloat(getComputedStyle(el).getPropertyValue("--tilt")) || 10;
+
+      function apply() {
+        raf = 0;
+        rx += (targetRx - rx) * 0.12;
+        ry += (targetRy - ry) * 0.12;
+        mx += (targetMx - mx) * 0.16;
+        my += (targetMy - my) * 0.16;
+        glare += (targetGlare - glare) * 0.14;
+
+        el.style.setProperty("--rx", `${rx.toFixed(3)}deg`);
+        el.style.setProperty("--ry", `${ry.toFixed(3)}deg`);
+        el.style.setProperty("--mx", `${mx.toFixed(2)}%`);
+        el.style.setProperty("--my", `${my.toFixed(2)}%`);
+        el.style.setProperty("--glare", `${glare.toFixed(3)}`);
+      }
+
+      function schedule() {
+        if (raf) return;
+        raf = requestAnimationFrame(apply);
+      }
+
+      function onMove(e: PointerEvent) {
+        const rect = el.getBoundingClientRect();
+        if (rect.width <= 0 || rect.height <= 0) return;
+
+        const x = (e.clientX - rect.left) / rect.width;
+        const y = (e.clientY - rect.top) / rect.height;
+
+        const nx = clamp(x, 0, 1) * 2 - 1;
+        const ny = clamp(y, 0, 1) * 2 - 1;
+
+        targetRx = (-ny * maxTilt);
+        targetRy = (nx * maxTilt);
+
+        targetMx = clamp(x, 0, 1) * 100;
+        targetMy = clamp(y, 0, 1) * 100;
+
+        const dist = Math.min(1, Math.hypot(nx, ny));
+        targetGlare = 1 - dist;
+
+        schedule();
+      }
+
+      function reset() {
+        targetRx = 0;
+        targetRy = 0;
+        targetMx = 50;
+        targetMy = 50;
+        targetGlare = 0;
+        schedule();
+      }
+
+      el.addEventListener("pointermove", onMove, { passive: true });
+      el.addEventListener("pointerleave", reset, { passive: true });
+      el.addEventListener("pointerdown", onMove, { passive: true });
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    initCardHolograms();
+  });
+</script>

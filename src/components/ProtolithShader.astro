@@ -1,0 +1,485 @@
+---
+type Props = {
+  class?: string
+  id?: string
+  palette?: Array<string>
+}
+
+const {
+  class: className = "",
+  id: providedId,
+  palette: providedPalette
+} = Astro.props as Props;
+
+const id = providedId ?? `protolith-shader-${Math.random().toString(36).slice(2)}`;
+const palette = providedPalette ?? ["#ff5641", "#cf0177", "#7f38dc"];
+---
+
+<div class={`protolith-shader ${className}`}>
+  <canvas id={id} class="protolith-shader__canvas" aria-hidden="true"></canvas>
+</div>
+
+<style>
+  .protolith-shader {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-height: 120px;
+    overflow: hidden;
+  }
+
+  .protolith-shader__canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .protolith-shader {
+      display: none;
+    }
+  }
+</style>
+
+<script is:inline define:vars={{ id, passedPalette: palette }}>
+  ;(() => {
+    const canvas = document.getElementById(id);
+
+    if (!canvas) return;
+
+    const prefersReduced = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
+    if (prefersReduced) {
+      canvas.style.display = "none";
+      return;
+    }
+
+    const palette = passedPalette;
+
+    const hexToRgb01 = (hex) => {
+      const cleaned = String(hex).trim().replace("#", "");
+      const full = cleaned.length === 3
+        ? cleaned.split("").map((c) => c + c).join("")
+        : cleaned;
+
+      const num = Number.parseInt(full, 16);
+      const r = (num >> 16) & 255;
+      const g = (num >> 8) & 255;
+      const b = num & 255;
+
+      return [r / 255, g / 255, b / 255];
+    };
+
+    const lerp = (a, b, t) => a + (b - a) * t;
+    const ease = (x) => x * x * (3 - 2 * x);
+    const easeOutCubic = (x) => 1 - Math.pow(1 - x, 3);
+
+    try {
+      const gl =
+        canvas.getContext("webgl", {
+          antialias: false,
+          alpha: true,
+          depth: false,
+          stencil: false,
+          powerPreference: "high-performance"
+        }) ||
+        canvas.getContext("experimental-webgl", {
+          antialias: false,
+          alpha: true,
+          depth: false,
+          stencil: false,
+          powerPreference: "high-performance"
+        });
+
+      if (!gl) {
+        canvas.style.display = "none";
+        return;
+      }
+
+      const vertSrc = `
+        attribute vec2 a_pos;
+        varying vec2 v_uv;
+        void main() {
+          v_uv = (a_pos * 0.5) + 0.5;
+          gl_Position = vec4(a_pos, 0.0, 1.0);
+        }
+      `;
+
+      const fragSrc = `
+        precision highp float;
+
+        varying vec2 v_uv;
+        uniform vec2 u_res;
+        uniform float u_time;
+        uniform float u_morph;
+        uniform float u_shapeA;
+        uniform float u_shapeB;
+        uniform vec3 u_accent;
+        uniform float u_spin;
+
+        mat2 rot(float a){ float s=sin(a), c=cos(a); return mat2(c,-s,s,c); }
+
+        float hash31(vec3 p) {
+          p = fract(p * 0.1031);
+          p += dot(p, p.yzx + 33.33);
+          return fract((p.x + p.y) * p.z);
+        }
+
+        float noise3(vec3 p) {
+          vec3 i = floor(p);
+          vec3 f = fract(p);
+          vec3 u = f * f * (3.0 - 2.0 * f);
+
+          float n000 = hash31(i + vec3(0.0, 0.0, 0.0));
+          float n100 = hash31(i + vec3(1.0, 0.0, 0.0));
+          float n010 = hash31(i + vec3(0.0, 1.0, 0.0));
+          float n110 = hash31(i + vec3(1.0, 1.0, 0.0));
+          float n001 = hash31(i + vec3(0.0, 0.0, 1.0));
+          float n101 = hash31(i + vec3(1.0, 0.0, 1.0));
+          float n011 = hash31(i + vec3(0.0, 1.0, 1.0));
+          float n111 = hash31(i + vec3(1.0, 1.0, 1.0));
+
+          float nx00 = mix(n000, n100, u.x);
+          float nx10 = mix(n010, n110, u.x);
+          float nx01 = mix(n001, n101, u.x);
+          float nx11 = mix(n011, n111, u.x);
+
+          float nxy0 = mix(nx00, nx10, u.y);
+          float nxy1 = mix(nx01, nx11, u.y);
+
+          return mix(nxy0, nxy1, u.z);
+        }
+
+        float fbm(vec3 p) {
+          float v = 0.0;
+          float a = 0.5;
+          for (int i = 0; i < 4; i++) {
+            v += a * noise3(p);
+            p *= 2.02;
+            a *= 0.5;
+          }
+          return v;
+        }
+
+        float sdSphere(vec3 p, float r){ return length(p) - r; }
+
+        float sdBox(vec3 p, vec3 b){
+          vec3 q = abs(p) - b;
+          return length(max(q, 0.0)) + min(max(q.x, max(q.y, q.z)), 0.0);
+        }
+
+        float sdRoundBox(vec3 p, vec3 b, float r){
+          return sdBox(p, b) - r;
+        }
+
+        float sdTorus(vec3 p, vec2 t){
+          vec2 q = vec2(length(p.xz) - t.x, p.y);
+          return length(q) - t.y;
+        }
+
+        float sdOcta(vec3 p, float s){
+          p = abs(p);
+          return (p.x + p.y + p.z - s) * 0.57735026919;
+        }
+
+        float shape(vec3 p, float id){
+          // cinematic morph spin (fast start -> slow end)
+          p.xz = rot(u_spin) * p.xz;
+          p.yz = rot(u_spin * 0.35) * p.yz;
+
+          // subtle constant drift
+          p.xz = rot(u_time * 0.25) * p.xz;
+          p.xy = rot(u_time * 0.18) * p.xy;
+
+          if (id < 0.5) return sdBox(p, vec3(0.52));
+          if (id < 1.5) return sdSphere(p, 0.62);
+          if (id < 2.5) return sdTorus(p, vec2(0.55, 0.16));
+          if (id < 3.5) return sdOcta(p, 0.95);
+          return sdRoundBox(p, vec3(0.46), 0.14);
+        }
+
+        float map(vec3 p){
+          float dA = shape(p, u_shapeA);
+          float dB = shape(p, u_shapeB);
+          return mix(dA, dB, smoothstep(0.0, 1.0, u_morph));
+        }
+
+        vec3 calcNormal(vec3 p){
+          vec2 e = vec2(0.0015, 0.0);
+          return normalize(vec3(
+            map(p + e.xyy) - map(p - e.xyy),
+            map(p + e.yxy) - map(p - e.yxy),
+            map(p + e.yyx) - map(p - e.yyx)
+          ));
+        }
+
+        float softShadow(vec3 ro, vec3 rd, float tmin, float tmax){
+          float res = 1.0;
+          float t = tmin;
+          for (int i = 0; i < 36; i++){
+            float h = map(ro + rd * t);
+            res = min(res, 10.0 * h / t);
+            t += clamp(h, 0.01, 0.08);
+            if (t > tmax) break;
+          }
+          return clamp(res, 0.0, 1.0);
+        }
+
+        float ao(vec3 p, vec3 n){
+          float occ = 0.0;
+          float sca = 1.0;
+          for (int i = 0; i < 5; i++){
+            float h = 0.02 + 0.06 * float(i);
+            float d = map(p + n * h);
+            occ += (h - d) * sca;
+            sca *= 0.7;
+          }
+          return clamp(1.0 - 2.2 * occ, 0.0, 1.0);
+        }
+
+        void main(){
+          vec2 frag = v_uv * u_res;
+          vec2 p = (frag - 0.5 * u_res) / u_res.y;
+
+          float t = u_time;
+          // vec3 ro = vec3(1.9, 1.1, 1.9);
+          vec3 ro = vec3(2.25, 1.25, 2.25);
+          ro.xz = (rot(t * 0.18) * ro.xz);
+          vec3 ta = vec3(0.0);
+
+          vec3 ww = normalize(ta - ro);
+          vec3 uu = normalize(cross(ww, vec3(0.0, 1.0, 0.0)));
+          vec3 vv = cross(uu, ww);
+          vec3 rd = normalize(uu * p.x + vv * p.y + ww * 1.35);
+
+          float dist = 0.0;
+          float hit = 0.0;
+          vec3 pos = ro;
+
+          for (int i = 0; i < 96; i++){
+            pos = ro + rd * dist;
+            float d = map(pos);
+            if (d < 0.0012) { hit = 1.0; break; }
+            dist += d * 0.9;
+            if (dist > 8.0) break;
+          }
+
+          // background with accent wash (stronger to show cycling)
+          // vec3 bg = vec3(0.03, 0.035, 0.06);
+          // bg += 0.12 * u_accent * smoothstep(-0.2, 0.8, p.y);
+          // bg += 0.05 * u_accent * smoothstep(0.9, -0.1, p.x);
+          
+          vec3 bg = vec3(0.9608, 0.9686, 0.9804); // #f5f7fa
+
+// keep this subtle on light backgrounds (or comment out entirely)
+bg += 0.025 * u_accent * smoothstep(-0.2, 0.8, p.y);
+bg += 0.010 * u_accent * smoothstep(0.9, -0.1, p.x);
+
+          vec3 col = bg;
+
+          if (hit > 0.5){
+            vec3 n = calcNormal(pos);
+
+            vec3 l = normalize(vec3(-0.6, 0.9, 0.2));
+            float ndl = clamp(dot(n, l), 0.0, 1.0);
+
+            float sh = softShadow(pos + n * 0.01, l, 0.02, 3.0);
+            float occ = ao(pos, n);
+
+            vec3 hdir = normalize(l - rd);
+
+            // --- stone material ---
+            float stoneScale = 3.0; // edit: detail frequency
+            float stone = fbm(pos * stoneScale);
+
+            float veins = fbm(pos * (stoneScale * 2.5) + 12.3);
+            veins = smoothstep(0.55, 0.85, veins);
+            float stoneMask = clamp(0.65 * stone + 0.35 * veins, 0.0, 1.0);
+
+            vec3 stoneLight = vec3(0.86, 0.87, 0.90);
+            // vec3 stoneDark  = vec3(0.48, 0.50, 0.55);
+            vec3 stoneDark  = vec3(0.48, 0.50, 0.65);
+            vec3 base = mix(stoneLight, stoneDark, stoneMask);
+
+            float rough = mix(0.45, 0.92, stoneMask);
+            float specPow = mix(96.0, 18.0, rough);
+
+            float spec = pow(clamp(dot(n, hdir), 0.0, 1.0), specPow);
+
+            float fres = pow(1.0 - clamp(dot(n, -rd), 0.0, 1.0), 4.0);
+
+            col = base * (0.18 + 0.9 * ndl * sh) * occ;
+            col += 0.25 * spec * sh;
+
+            // accent as cinematic rim light + subtle lift
+            col += (0.65 * fres) * u_accent;
+            col += 0.06 * u_accent * (0.2 + 0.8 * ndl);
+
+            col *= 1.0 - 0.08 * smoothstep(0.0, 1.0, fres);
+          }
+
+          float g = fract(sin(dot(frag, vec2(12.9898,78.233))) * 43758.5453);
+          col += (g - 0.5) * 0.01;
+
+          gl_FragColor = vec4(col, 1.0);
+        }
+      `;
+
+      function compileShader(type, source) {
+        const shader = gl.createShader(type);
+        gl.shaderSource(shader, source);
+        gl.compileShader(shader);
+
+        if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+          const msg = gl.getShaderInfoLog(shader) || "Shader compile failed";
+          gl.deleteShader(shader);
+          throw new Error(msg);
+        }
+
+        return shader;
+      }
+
+      function createProgram(vsSrc, fsSrc) {
+        const vs = compileShader(gl.VERTEX_SHADER, vsSrc);
+        const fs = compileShader(gl.FRAGMENT_SHADER, fsSrc);
+        const program = gl.createProgram();
+
+        gl.attachShader(program, vs);
+        gl.attachShader(program, fs);
+        gl.linkProgram(program);
+
+        gl.deleteShader(vs);
+        gl.deleteShader(fs);
+
+        if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+          const msg = gl.getProgramInfoLog(program) || "Program link failed";
+          gl.deleteProgram(program);
+          throw new Error(msg);
+        }
+
+        return program;
+      }
+
+      const program = createProgram(vertSrc, fragSrc);
+      gl.useProgram(program);
+
+      const posLoc = gl.getAttribLocation(program, "a_pos");
+      const uRes = gl.getUniformLocation(program, "u_res");
+      const uTime = gl.getUniformLocation(program, "u_time");
+      const uMorph = gl.getUniformLocation(program, "u_morph");
+      const uShapeA = gl.getUniformLocation(program, "u_shapeA");
+      const uShapeB = gl.getUniformLocation(program, "u_shapeB");
+      const uAccent = gl.getUniformLocation(program, "u_accent");
+      const uSpin = gl.getUniformLocation(program, "u_spin");
+
+      const buf = gl.createBuffer();
+      gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
+
+      gl.enableVertexAttribArray(posLoc);
+      gl.vertexAttribPointer(posLoc, 2, gl.FLOAT, false, 0, 0);
+
+      // perf knobs
+      const dprCap = 1.6;
+      let dpr = Math.min(window.devicePixelRatio || 1, dprCap);
+
+      function resize() {
+        const rect = canvas.getBoundingClientRect();
+        if (rect.width < 2 || rect.height < 2) return;
+
+        const w = Math.floor(rect.width * dpr);
+        const h = Math.floor(rect.height * dpr);
+
+        if (canvas.width !== w || canvas.height !== h) {
+          canvas.width = w;
+          canvas.height = h;
+          gl.viewport(0, 0, w, h);
+        }
+      }
+
+      const ro = new ResizeObserver(() => resize());
+      ro.observe(canvas);
+
+      let running = true;
+      const io = new IntersectionObserver(
+        (entries) => {
+          running = entries.some((e) => e.isIntersecting);
+        },
+        { threshold: 0.01 }
+      );
+      io.observe(canvas);
+
+      // scheduling
+      const shapes = [0, 1, 2, 3, 4]; // box, sphere, torus, octa, roundbox
+      const shapeSegmentSec = 2.2;
+      const colorSegmentSec = 1.6; // easy edit: color cycle speed
+
+      // cinematic spin tuning
+      const spinTurnsPerMorph = 1.5; // easy edit
+      const spinAmount = Math.PI * 2 * spinTurnsPerMorph;
+
+      let start = performance.now();
+      let last = start;
+      let quality = 1.0;
+
+      function frame(now) {
+        requestAnimationFrame(frame);
+        if (!running) return;
+
+        const dt = now - last;
+        last = now;
+
+        if (dt > 22) quality = Math.max(0.72, quality - 0.03);
+        else if (dt < 17) quality = Math.min(1.0, quality + 0.01);
+
+        const targetDpr = Math.min((window.devicePixelRatio || 1) * quality, dprCap);
+        if (Math.abs(targetDpr - dpr) > 0.02) dpr = targetDpr;
+
+        resize();
+
+        const t = (now - start) / 1000;
+
+        // shape morph
+        const shapeSeg = Math.floor(t / shapeSegmentSec);
+        const shapeLocal = (t - shapeSeg * shapeSegmentSec) / shapeSegmentSec;
+        const m = ease(shapeLocal);
+
+        const a = shapes[shapeSeg % shapes.length];
+        const b = shapes[(shapeSeg + 1) % shapes.length];
+
+        // cinematic spin: fast start -> slow end (per morph), continuous across segments
+        const spinT = easeOutCubic(m);
+        const spin = shapeSeg * spinAmount + spinT * spinAmount;
+
+        // color cycle independent
+        const colorSeg = Math.floor(t / colorSegmentSec);
+        const colorLocal = (t - colorSeg * colorSegmentSec) / colorSegmentSec;
+        const cm = ease(colorLocal);
+
+        const c0 = hexToRgb01(palette[colorSeg % palette.length]);
+        const c1 = hexToRgb01(palette[(colorSeg + 1) % palette.length]);
+
+        const accent = [
+          lerp(c0[0], c1[0], cm),
+          lerp(c0[1], c1[1], cm),
+          lerp(c0[2], c1[2], cm)
+        ];
+
+        gl.uniform2f(uRes, canvas.width, canvas.height);
+        gl.uniform1f(uTime, t);
+        gl.uniform1f(uMorph, m);
+        gl.uniform1f(uShapeA, a);
+        gl.uniform1f(uShapeB, b);
+        gl.uniform3f(uAccent, accent[0], accent[1], accent[2]);
+        gl.uniform1f(uSpin, spin);
+
+        gl.drawArrays(gl.TRIANGLES, 0, 3);
+      }
+
+      resize();
+      requestAnimationFrame(frame);
+    } catch (err) {
+      console.error("[ProtolithShader] init failed", err);
+      canvas.style.display = "none";
+    }
+  })();
+</script>

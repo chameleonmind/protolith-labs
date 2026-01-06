@@ -1,0 +1,341 @@
+---
+import Button from "./elements/Button.astro";
+
+type HeaderLink = {
+  href: string
+  label: string
+}
+
+type Props = {
+  siteName?: string
+  links?: Array<HeaderLink>
+  shrinkAfterPx?: number
+  maxWidthPx?: number
+}
+
+const {
+  siteName = 'Protolith Labs',
+  links = [
+    { href: '#services', label: 'Services' },
+    // { href: '/work', label: 'Work' },
+    // { href: '/about', label: 'About' },
+    // { href: '/contact', label: 'Contact' },
+  ],
+  shrinkAfterPx = 200,
+  maxWidthPx = 1180,
+} = Astro.props as Props
+
+const id = `sticky-header-${Math.random().toString(36).slice(2)}`
+---
+
+<header id={id} class="sticky-header" data-shrink-after={shrinkAfterPx} data-max-width={maxWidthPx}>
+  <div class="sticky-header__inner">
+    <a class="sticky-header__brand" href="/" aria-label={`${siteName} home`}>
+      {siteName}
+    </a>
+
+    <nav class="sticky-header__nav" aria-label="Primary navigation">
+      <ul class="sticky-header__links">
+        {links.map((l) => (
+          <li><Button variant="text" class="sticky-header__link" href={l.href}>{l.label}</Button></li>
+        ))}
+      </ul>
+    </nav>
+
+    <div class="sticky-header__mobile">
+      <button
+        class="sticky-header__menuBtn"
+        type="button"
+        aria-haspopup="menu"
+        aria-expanded="false"
+      >
+        Menu
+        <span class="sticky-header__chev" aria-hidden="true">▾</span>
+      </button>
+
+      <div class="sticky-header__menu" role="menu" aria-label="Mobile menu">
+        {links.map((l) => (
+          <Button variant="text" class="sticky-header__menuItem" role="menuitem" href={l.href}>{l.label}</Button>
+        ))}
+      </div>
+    </div>
+  </div>
+</header>
+
+<style>
+  :root {
+    --header-max: 1180px;
+    --header-gap: 1rem;
+    --header-radius: 16px;
+    --header-border: var(--border-color);
+    --header-bg: rgba(255, 255, 255, 0.35);
+    --header-text: rgba(10, 12, 16, 0.9);
+    --header-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+  }
+
+  .sticky-header {
+    position: fixed;
+    top: 0;
+    z-index: 50;
+    width: 100%;
+    pointer-events: none;
+  }
+
+  .sticky-header__inner {
+    pointer-events: auto;
+    width: 100%;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+
+    padding: 0 1rem;
+
+    background: var(--header-bg);
+    color: var(--text-color);
+    border-bottom: 1px solid var(--header-border);
+
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+
+    transform: translateY(0);
+    transition:
+      width 220ms ease,
+      transform 220ms ease,
+      box-shadow 220ms ease,
+      border-radius 220ms ease,
+      border-color 220ms ease;
+  }
+
+  .sticky-header__brand {
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    text-decoration: none;
+    color: inherit;
+    white-space: nowrap;
+  }
+
+  .sticky-header__links {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .sticky-header__link {
+    text-decoration: none;
+    color: inherit;
+    font-weight: 600;
+    opacity: 0.82;
+    transition: opacity 150ms ease;
+  }
+
+  .sticky-header__link:hover {
+    opacity: 1;
+  }
+
+  .sticky-header[data-shrunk="true"] {
+    top: 1rem;
+  }
+
+  .sticky-header[data-shrunk="true"] .sticky-header__inner {
+    width: min(var(--header-max), calc(100vw - 2rem));
+    margin: 0 auto;
+    border-radius: var(--header-radius);
+    box-shadow: var(--header-shadow);
+  }
+
+  /* Mobile */
+  .sticky-header__mobile {
+    display: none;
+    position: relative;
+  }
+
+  .sticky-header__menuBtn {
+    appearance: none;
+    border: 1px solid var(--header-border);
+    background: rgba(255, 255, 255, 0.6);
+    color: inherit;
+    font-weight: 650;
+    border-radius: 999px;
+    padding: 0.5rem 0.8rem;
+    cursor: pointer;
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
+
+  .sticky-header__chev {
+    transform: translateY(1px);
+  }
+
+  .sticky-header__menu {
+    position: absolute;
+    right: 0;
+    top: calc(100% + 0.6rem);
+    width: 220px;
+    padding: 0.35rem;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.92);
+    box-shadow: var(--header-shadow);
+
+    display: none;
+  }
+
+  .sticky-header[data-menu-open="true"] .sticky-header__menu {
+    display: block;
+  }
+
+  .sticky-header__menuItem {
+    display: block;
+    padding: 0.7rem 0.75rem;
+    border-radius: 10px;
+    text-decoration: none;
+    color: inherit;
+    font-weight: 600;
+    opacity: 0.9;
+  }
+
+  .sticky-header__menuItem:hover {
+    background: rgba(0, 0, 0, 0.04);
+    opacity: 1;
+  }
+
+  /* Responsive breakpoint */
+  @media (max-width: 760px) {
+    .sticky-header__nav {
+      display: none;
+    }
+    .sticky-header__mobile {
+      display: block;
+    }
+
+    /* Mobile should always be top:0 and full width, ignore shrunk state */
+    .sticky-header {
+      top: 0 !important;
+    }
+    .sticky-header__inner {
+      width: 100% !important;
+      margin: 0 !important;
+      border-radius: 0 !important;
+      box-shadow: none !important;
+      border-left: 0 !important;
+      border-right: 0 !important;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sticky-header__inner {
+      transition: none;
+    }
+  }
+</style>
+
+<script is:inline define:vars={{id}}>
+  ;(() => {
+    const header = document.getElementById(id)
+    if (!header) return
+
+    const inner = header.querySelector('.sticky-header__inner')
+    const menuBtn = header.querySelector('.sticky-header__menuBtn')
+    const menu = header.querySelector('.sticky-header__menu')
+
+    const shrinkAfter = Number(header.dataset.shrinkAfter || '200')
+    const maxWidth = Number(header.dataset.maxWidth || '1180')
+
+    header.style.setProperty('--header-max', `${maxWidth}px`)
+
+    const mq = window.matchMedia('(max-width: 760px)')
+    let isMobile = mq.matches
+
+    function setShrunkState() {
+      if (isMobile) {
+        header.dataset.shrunk = 'false'
+        return
+      }
+
+      const scrolled = window.scrollY || 0
+      header.dataset.shrunk = scrolled >= shrinkAfter ? 'true' : 'false'
+    }
+
+    function closeMenu() {
+      header.dataset.menuOpen = 'false'
+      if (menuBtn) menuBtn.setAttribute('aria-expanded', 'false')
+    }
+
+    function openMenu() {
+      header.dataset.menuOpen = 'true'
+      if (menuBtn) menuBtn.setAttribute('aria-expanded', 'true')
+    }
+
+    function toggleMenu() {
+      const open = header.dataset.menuOpen === 'true'
+      if (open) closeMenu()
+      else openMenu()
+    }
+
+    // Scroll handling (rAF throttled)
+    let ticking = false
+    function onScroll() {
+      if (ticking) return
+      ticking = true
+      requestAnimationFrame(() => {
+        ticking = false
+        setShrunkState()
+      })
+    }
+
+    // Click outside to close menu (and close on any menu item click)
+    function onDocPointerDown(e) {
+      if (header.dataset.menuOpen !== 'true') return
+      const target = e.target
+      if (!(target instanceof Node)) return
+
+      const clickedInside = header.contains(target)
+      if (!clickedInside) closeMenu()
+    }
+
+    function onKeyDown(e) {
+      if (e.key === 'Escape') closeMenu()
+    }
+
+    function onMediaChange() {
+      isMobile = mq.matches
+      closeMenu()
+      setShrunkState()
+    }
+
+    function init() {
+      setShrunkState()
+
+      window.addEventListener('scroll', onScroll, { passive: true })
+      window.addEventListener('resize', onScroll, { passive: true })
+
+      if (mq.addEventListener) mq.addEventListener('change', onMediaChange)
+      else mq.addListener(onMediaChange)
+
+      if (menuBtn) {
+        menuBtn.addEventListener('click', (e) => {
+          e.preventDefault()
+          toggleMenu()
+        })
+      }
+
+      document.addEventListener('pointerdown', onDocPointerDown, { passive: true })
+      document.addEventListener('keydown', onKeyDown)
+
+      if (menu) {
+        menu.addEventListener('click', (e) => {
+          const target = e.target
+          if (target instanceof HTMLAnchorElement) closeMenu()
+        })
+      }
+    }
+
+    init()
+  })()
+</script>

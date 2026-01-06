@@ -1,0 +1,323 @@
+---
+import Image from "astro/components/Image.astro";
+import GradientBorder from "./elements/GradientBorder.astro";
+import fullStackIcon from "../assets/images/full_stack.svg";
+import frontEndIcon from "../assets/images/front_end.svg";
+import designIcon from "../assets/images/design.svg";
+import stabilizeIcon from "../assets/images/vibe_code_stabilization.svg";
+import partnerIcon from "../assets/images/consulting.svg";
+
+import ServiceOneBg from "../assets/images/service_glass_1.png";
+import ServiceTwoBg from "../assets/images/service_glass_2.png";
+import ServiceThreeBg from "../assets/images/service_glass_3.png";
+import ServiceFourBg from "../assets/images/service_glass_4.png";
+import ServiceFiveBg from "../assets/images/service_glass_5.png";
+import PlusBox from "./elements/PlusBox.astro";
+---
+<section id="services" class="solutions">
+  <h2>What <span class="gradient-text">Protolith Labs</span> can do for you</h2>
+  <div class="sticky-card">
+    <div class="sticky-card__header">
+      <h3><span class="gradient-text font-black">Full-stack</span> product builds & <span
+        class="gradient-text font-black">MVPs</span></h3>
+    </div>
+    <div class="sticky-card__content">
+      <div class="features-list">
+        <PlusBox variant="inverted">
+          <p>
+            End-to-end delivery of web apps and MVPs: backend, frontend, and basic infrastructure. Perfect if you want a
+            working product, not just mockups and promises.
+          </p>
+        </PlusBox>
+        <ul>
+          <li>Product discovery and scope definition (features, constraints, success criteria)</li>
+          <li>Technical architecture and stack selection based on product goals</li>
+          <li>Frontend development (Vue, React, Astro) and backend development (APIs, data models, integrations)</li>
+          <li>Performance and scalability considerations from day one</li>
+          <li>Launch support, documentation, and handoff</li>
+        </ul>
+        <small>*Engagements are tailored — not every project needs every service.</small>
+      </div>
+      <GradientBorder class="features-image">
+        <div class="hologram-card" data-icon-url={fullStackIcon.src}>
+          <Image src={ServiceOneBg} width={640} height={720} alt="Full-stack product builds & MVPs" />
+          <Image src={fullStackIcon} class="icon" width="100" height="100" alt="Full stack icon" />
+        </div>
+      </GradientBorder>
+    </div>
+  </div>
+  <div class="sticky-card">
+    <div class="sticky-card__header">
+      <h3><span class="gradient-text font-black">Front-end</span> consulting</h3>
+    </div>
+    <div class="sticky-card__content">
+      <div class="features-list">
+        <PlusBox variant="inverted">
+          <p>
+            Architecture reviews, refactors, and feature work for existing Vue or React projects. I help teams get
+            unstuck, improve performance, and make the codebase less painful to work in.
+          </p>
+        </PlusBox>
+        <ul>
+          <li>Codebase audits and architectural reviews</li>
+          <li>Vue 2 → Vue 3 or legacy React refactors and migrations</li>
+          <li>Performance analysis and optimization</li>
+          <li>Frontend tooling improvements (Vite, TypeScript, linting, testing)</li>
+          <li>Feature development alongside your existing team</li>
+          <li>Code reviews and technical mentorship for developers</li>
+          <li>Establishing conventions, patterns, and documentation</li>
+        </ul>
+        <small>*Engagements are tailored — not every project needs every service.</small>
+      </div>
+      <GradientBorder class="features-image">
+        <div class="hologram-card" data-icon-url={frontEndIcon.src}>
+          <Image src={ServiceTwoBg} width={640} height={720} alt="Front-end consulting" />
+          <Image src={frontEndIcon} class="icon" width="100" height="100" alt="Front-end consulting icon" />
+        </div>
+      </GradientBorder>
+    </div>
+  </div>
+  <div class="sticky-card">
+    <div class="sticky-card__header">
+      <h3>Product & UI <span class="gradient-text font-black">design</span></h3>
+    </div>
+    <div class="sticky-card__content">
+      <div class="features-list">
+        <PlusBox variant="inverted">
+          <p>
+            Clean, functional product design with a developer’s brain behind it. Flows, UX, and UI that respect both
+            users and the implementation.
+          </p>
+        </PlusBox>
+        <ul>
+          <li>Product and UX discovery workshops</li>
+          <li>User flows and interaction design</li>
+          <li>Wireframes and high-fidelity UI design</li>
+          <li>Design systems and reusable component patterns</li>
+          <li>UX improvements for existing products</li>
+          <li>Accessibility-aware design decisions</li>
+          <li>Design validation during implementation</li>
+        </ul>
+        <small>*Engagements are tailored — not every project needs every service.</small>
+      </div>
+      <GradientBorder class="features-image">
+        <div class="hologram-card" data-icon-url={designIcon.src}>
+          <Image src={ServiceThreeBg} width={640} height={720} alt="Product & UI design background" />
+          <Image src={designIcon} class="icon" width="100" height="100" alt="Product & UI design icon" />
+        </div>
+      </GradientBorder>
+    </div>
+  </div>
+  <div class="sticky-card">
+    <div class="sticky-card__header">
+      <h3>Stabilizing <span class="gradient-text font-black">fast-grown</span> products</h3>
+    </div>
+    <div class="sticky-card__content">
+      <div class="features-list">
+        <PlusBox variant="inverted">
+          <p>
+            Whether it was vibe-coded or just started fast, some products are shipped early and quickly, and now feel
+            fragile. I help teams stabilize, untangle, and evolve apps that grew without a clear structure.
+          </p>
+        </PlusBox>
+        <ul>
+          <li>Audits to identify structural, performance, and maintainability issues</li>
+          <li>Untangling rushed or inconsistent logic</li>
+          <li>Introducing clear architecture, patterns, and ownership boundaries</li>
+          <li>Reducing technical debt in a controlled, prioritized way</li>
+          <li>Creating a realistic stabilization and improvement roadmap</li>
+        </ul>
+        <small>*Sometimes the job isn’t adding new blocks — it’s making sure the existing ones actually hold.</small>
+      </div>
+      <GradientBorder class="features-image">
+        <div class="hologram-card" data-icon-url={stabilizeIcon.src}>
+          <Image src={ServiceFourBg} width={640} height={720} alt="Stabilizing fast-grown products background" />
+          <Image src={stabilizeIcon} class="icon" width="100" height="100" alt="Stabilizing fast-grown products icon" />
+        </div>
+      </GradientBorder>
+    </div>
+  </div>
+  <div class="sticky-card">
+    <div class="sticky-card__header">
+      <h3><span class="gradient-text font-black">Long-term</span> technical <span class="gradient-text font-black">partner</span>
+      </h3>
+    </div>
+    <div class="sticky-card__content">
+      <div class="features-list">
+        <PlusBox variant="inverted">
+          <p>
+            For teams that need ongoing help but don’t want to hire full-time: code reviews, roadmap input, and hands-on
+            development each month.
+          </p>
+        </PlusBox>
+        <ul>
+          <li>Ongoing development support</li>
+          <li>Regular code reviews and architecture guidance</li>
+          <li>Technical input for roadmap planning and prioritization</li>
+          <li>Support during critical releases or refactors</li>
+          <li>Acting as a senior engineer or fractional tech lead</li>
+          <li>Knowledge sharing and team enablement</li>
+        </ul>
+        <small>*Engagements are tailored — not every project needs every service.</small>
+      </div>
+      <GradientBorder class="features-image">
+        <div class="hologram-card" data-icon-url={partnerIcon.src}>
+          <Image src={ServiceFiveBg} width={640} height={720} alt="Long-term technical partner background" />
+          <Image src={partnerIcon} class="icon" width="100" height="100" alt="Long-term technical partner icon" />
+        </div>
+      </GradientBorder>
+    </div>
+  </div>
+</section>
+
+<style lang="scss">
+  .solutions {
+    padding: 4rem 0;
+
+    h2 {
+      font-size: 2.5rem;
+      color: var(--text-primary);
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+
+    .sticky-card {
+      position: sticky;
+      top: 10vh;
+
+      &:nth-of-type(2) {
+        top: 16vh;
+      }
+
+      &:nth-of-type(3) {
+        top: 22vh;
+      }
+
+      &:nth-of-type(4) {
+        top: 28vh;
+      }
+
+      &:nth-of-type(5) {
+        top: 34vh;
+      }
+
+      &__header {
+        display: flex;
+        align-items: center;
+        position: relative;
+        padding-left: 2rem;
+        height: 6vh;
+        background: linear-gradient(180deg, var(--background-darker), var(--background-light));
+        border-radius: calc(var(--radius) * 4) calc(var(--radius) * 4) 0 0;
+
+        h3 {
+          font-size: 1rem;
+          color: var(--text-color);
+
+          @media (min-width: 1024px) {
+            font-size: 1.5rem;
+          }
+        }
+      }
+
+      &__gradient {
+        height: 1rem;
+        background: linear-gradient(180deg, var(--background-dark), var(--background-light));
+
+        @media (min-width: 1024px) {
+          height: 2rem;
+        }
+      }
+
+      &__content {
+        padding: 1rem 2rem 6rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        background-color: var(--background-light);
+
+        p {
+          font-weight: bold;
+          font-size: 1rem;
+          padding: 1rem;
+          background-color: var(--background-light);
+          border-right: 1px dashed var(--border-color);
+          border-left: 1px dashed var(--border-color);
+          @media (min-width: 1024px) {
+            font-size: 1.125rem;
+          }
+        }
+
+        .features-list, .features-image {
+          flex: 1 1 auto;
+          max-width: 100%;
+        }
+
+        .features-image {
+          max-height: 20vh;
+          object-fit: cover;
+        }
+
+        .hologram-card {
+          height: 20vh;
+          min-height: unset;
+
+          &::before {
+            mix-blend-mode: screen;
+          }
+
+          @media (min-width: 1024px) {
+            height: 50vh;
+          }
+        }
+
+        @media (min-width: 1024px) {
+          flex-direction: row;
+
+          .features-list {
+            flex: 1 1 70%;
+            max-width: 70%;
+          }
+
+          .features-image {
+            flex: 1 1 30%;
+            max-width: 30%;
+            max-height: 50vh;
+          }
+        }
+      }
+
+      .features-list {
+        padding: 0 0.5rem 0 1rem;
+        order: 2;
+
+        @media (min-width: 1024px) {
+          order: 0;
+          padding: 0 2rem 0 4rem;
+        }
+
+        ul {
+          list-style-type: square;
+          list-style-image: linear-gradient(45deg, var(--accent-color), var(--accent-dark));
+          margin-top: 1rem;
+          padding-left: 1.25rem;
+
+          @media (min-width: 1024px) {
+            margin-top: 2rem;
+          }
+
+          li {
+            margin-bottom: 0.5rem;
+            position: relative;
+            font-size: 0.875rem;
+            padding-left: 0.5rem;
+
+            @media (min-width: 1024px) {
+              font-size: 1.15rem;
+            }
+          }
+        }
+      }
+    }
+  }
+</style>

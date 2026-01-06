@@ -1,0 +1,51 @@
+---
+
+---
+<div class="page-container">
+  <slot />
+</div>
+
+<style lang="scss">
+  .page-container {
+    width: 100%;
+    max-width: 1200px;
+    min-height: 100dvh;
+    scroll-snap-align: start;
+    margin: 0 auto;
+    border-left: 1px solid var(--border-color);
+    border-right: 1px solid var(--border-color);
+    position: relative;
+    z-index: 1;
+
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: -1;
+
+      background-image: linear-gradient(
+          to right,
+          transparent calc(20% - 0.5px),
+          var(--border-color) calc(20% - 0.5px),
+          var(--border-color) calc(20% + 0.5px),
+          transparent calc(20% + 0.5px),
+
+          transparent calc(40% - 0.5px),
+          var(--border-color) calc(40% - 0.5px),
+          var(--border-color) calc(40% + 0.5px),
+          transparent calc(40% + 0.5px),
+
+          transparent calc(60% - 0.5px),
+          var(--border-color) calc(60% - 0.5px),
+          var(--border-color) calc(60% + 0.5px),
+          transparent calc(60% + 0.5px),
+
+          transparent calc(80% - 0.5px),
+          var(--border-color) calc(80% - 0.5px),
+          var(--border-color) calc(80% + 0.5px),
+          transparent calc(80% + 0.5px),
+      );
+    }
+  }
+</style>

@@ -1,0 +1,74 @@
+---
+import IconPlus from "./IconPlus.astro";
+const { class: className = '', variant = 'normal', ...rest } = Astro.props
+
+const classes = [
+  'plus-box',
+  className,
+]
+  .filter(Boolean)
+  .join(' ')
+---
+
+<div class={classes} {...rest}>
+  <slot />
+  {(variant === 'normal' || variant === 'all') && <IconPlus class="icon top-right" />}
+  {(variant === 'normal' || variant === 'all') && <IconPlus class="icon bottom-left" />}
+  {(variant === 'inverted' || variant === 'all') && <IconPlus class="icon top-left" />}
+  {(variant === 'inverted' || variant === 'all') && <IconPlus class="icon bottom-right" />}
+</div>
+<style lang="scss">
+  @keyframes cycle-colors {
+    0% {
+      color: var(--primary);
+    }
+    25% {
+      color: var(--accent-color);
+    }
+    50% {
+      color: var(--text-color);
+    }
+    100% {
+      color: var(--primary);
+    }
+  }
+
+  .plus-box {
+    position: relative;
+    border-top: 1px dashed var(--border-color);
+    border-bottom: 1px dashed var(--border-color);
+
+    .icon {
+      position: absolute;
+      width: 1.25rem;
+      height: 1.25rem;
+      color: var(--primary);
+    }
+
+    .top-right {
+      top: -1px;
+      right: 0;
+      transform: translate(50%, -50%);
+    }
+
+    .bottom-left {
+      bottom: -1px;
+      left: 0;
+      transform: translate(-50%, 50%);
+    }
+
+    .top-left {
+      top: 0;
+      left: 0;
+      color: var(--accent-color);
+      transform: translate(-50%, -50%);
+    }
+
+    .bottom-right {
+      bottom: 0;
+      right: 0;
+      color: var(--accent-color);
+      transform: translate(50%, 50%);
+    }
+  }
+</style>

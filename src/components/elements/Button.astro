@@ -1,0 +1,96 @@
+---
+type ButtonVariant = 'primary' | 'text'
+
+const {
+  href = '#',
+  variant = 'primary',
+  class: className = '',
+  ...rest
+} = Astro.props as {
+  href?: string
+  variant?: ButtonVariant
+  class?: string
+}
+
+const classes = [
+  variant === 'text' ? 'text-button' : 'primary-button',
+  className,
+]
+  .filter(Boolean)
+  .join(' ')
+---
+
+<a href={href} class={classes} {...rest}>
+  <span><slot /></span>
+</a>
+
+<style lang="scss">
+  @keyframes toggle-animation {
+    0% {
+      transform: translateY(0);
+    }
+    33% {
+      transform: translateY(-100%);
+      opacity: 0;
+    }
+    66% {
+      transform: translateY(100%);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  .primary-button {
+    text-decoration: none;
+    background: linear-gradient(135deg, var(--accent-color), var(--accent-dark));
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--radius);
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    transition: all 0.4s ease;
+    -webkit-tap-highlight-color: transparent;
+
+    &:hover {
+      transform: scale(1.015);
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+      span {
+        animation: toggle-animation 0.2s ease-in-out forwards;
+      }
+    }
+  }
+
+  .text-button {
+    text-decoration: none;
+    background-color: transparent;
+    color: var(--text-color);
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius);
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent-color), var(--accent-dark));
+      bottom: 0.5rem;
+      left: 1rem;
+      transition: width 0.5s cubic-bezier(1, 0, 0, 1);
+    }
+
+    &:hover::after {
+      width: calc(100% - 2rem);
+    }
+  }
+</style>

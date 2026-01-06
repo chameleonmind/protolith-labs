@@ -1,0 +1,157 @@
+---
+
+---
+<footer class="footer">
+  <div class="footer-container">
+    <div class="footer-left">
+      <div class="brand">
+        <h3 class="brand-name">Protolith Labs</h3>
+        <p class="brand-tagline">Expert-led full-stack product consultancy.</p>
+      </div>
+      <nav class="footer-nav">
+        <a href="#services">Services</a>
+      </nav>
+    </div>
+    <div class="footer-right">
+      <div class="contact">
+        <h4>Contact</h4>
+        <p class="contact-email">
+          <a href="mailto:hello@protolithlabs.com">hello@protolithlabs.com</a>
+        </p>
+        <p class="contact-location">Niš, Serbia · Working remotely</p>
+      </div>
+      <div class="legal">
+        <span>&copy; 2026 Protolith Labs</span>
+        <a href="/privacy">Privacy Policy</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style lang="scss">
+  .footer {
+    background-color: var(--primary-dark);
+    color: var(--background-light);
+    padding: 3rem 2rem 2rem;
+  }
+
+  .footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    gap: 3rem;
+  }
+
+  .footer-left {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .brand-name {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin: 0 0 0.5rem;
+    color: var(--background-light);
+  }
+
+  .brand-tagline {
+    margin: 0;
+    font-size: 0.875rem;
+    color: rgba(245, 247, 250, 0.7);
+  }
+
+  .footer-nav {
+    display: flex;
+    gap: 1.5rem;
+
+    a {
+      color: var(--background-light);
+      text-decoration: none;
+      font-size: 0.875rem;
+      transition: color 0.2s ease;
+
+      &:hover {
+        color: var(--accent-color);
+      }
+    }
+  }
+
+  .footer-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 1.5rem;
+  }
+
+  .contact {
+    text-align: right;
+
+    h4 {
+      font-size: 0.875rem;
+      font-weight: 600;
+      margin: 0 0 0.75rem;
+      color: var(--background-light);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .contact-email {
+      margin: 0 0 0.25rem;
+
+      a {
+        color: var(--background-light);
+        text-decoration: none;
+        font-size: 0.875rem;
+        transition: color 0.2s ease;
+
+        &:hover {
+          color: var(--accent-color);
+        }
+      }
+    }
+
+    .contact-location {
+      margin: 0;
+      font-size: 0.875rem;
+      color: rgba(245, 247, 250, 0.7);
+    }
+  }
+
+  .legal {
+    display: flex;
+    gap: 1.5rem;
+    font-size: 0.75rem;
+    color: rgba(245, 247, 250, 0.5);
+
+    a {
+      color: rgba(245, 247, 250, 0.5);
+      text-decoration: none;
+      transition: color 0.2s ease;
+
+      &:hover {
+        color: var(--background-light);
+      }
+    }
+  }
+
+  @media (max-width: 640px) {
+    .footer-container {
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .footer-right {
+      align-items: flex-start;
+    }
+
+    .contact {
+      text-align: left;
+    }
+
+    .legal {
+      flex-wrap: wrap;
+    }
+  }
+</style>

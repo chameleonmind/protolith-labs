@@ -1,0 +1,145 @@
+---
+import VueIcon from "../assets/images/tech/LogosVue.svg";
+import ReactIcon from "../assets/images/tech/LogosReact.svg";
+import AstroIcon from "../assets/images/tech/LogosAstroIcon.svg";
+import NextjsIcon from "../assets/images/tech/LogosNextjsIcon.svg";
+import NuxtIcon from "../assets/images/tech/LogosNuxtIcon.svg";
+import PhpIcon from "../assets/images/tech/LogosPhpAlt.svg";
+import LaravelIcon from "../assets/images/tech/LogosLaravel.svg";
+import AdonisjsIcon from "../assets/images/tech/LogosAdonisjsIcon.svg";
+import MongodbIcon from "../assets/images/tech/LogosMongodbIcon.svg";
+import MysqlIcon from "../assets/images/tech/LogosMysqlIcon.svg";
+
+import { Image } from "astro:assets";
+import PlusBox from "./elements/PlusBox.astro";
+
+const technologies = [
+  {
+    name: "Vue",
+    icon: VueIcon
+  },
+  {
+    name: "Nuxt",
+    icon: NuxtIcon
+  },
+  {
+    name: "Astro",
+    icon: AstroIcon
+  },
+  {
+    name: "AdonisJS",
+    icon: AdonisjsIcon
+  },
+  {
+    name: "React",
+    icon: ReactIcon
+  },
+  {
+    name: "Next.js",
+    icon: NextjsIcon
+  },
+  {
+    name: "PHP",
+    icon: PhpIcon
+  },
+  {
+    name: "Laravel",
+    icon: LaravelIcon
+  },
+  {
+    name: "MongoDB",
+    icon: MongodbIcon
+  },
+  {
+    name: "MySQL",
+    icon: MysqlIcon
+  }
+];
+---
+<section class="technology-section">
+  <h2>Main technologies</h2>
+  <ul>
+    {technologies.map(tech => (
+      <li>
+        <PlusBox class="technology-item">
+          <Image src={tech.icon} alt={`${tech.name} Logo`} width={80} height={80} />
+          <span>{tech.name}</span>
+        </PlusBox>
+      </li>
+    ))}
+  </ul>
+</section>
+
+<style lang="scss">
+  .technology-section {
+    padding: 1rem 0 3rem;
+    overflow: hidden;
+
+    @media (min-width: 1220px) {
+      overflow: visible;
+    }
+
+    h2 {
+      font-size: 1.75rem;
+      margin-bottom: 3rem;
+      padding-left: 2rem;
+    }
+
+    ul {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+
+      li {
+        flex: 1 1 50%;
+        max-width: 50%;
+
+        @media (min-width: 576px) {
+          flex: 1 1 20%;
+          max-width: 20%;
+        }
+
+        .technology-item {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          gap: 1rem;
+          aspect-ratio: 1;
+          text-align: center;
+          min-height: 5rem;
+          background-color: transparent;
+          transition: background-color 0.3s ease;
+
+          &:hover {
+            background-color: var(--accent-color-5);
+
+            img {
+              filter: none;
+            }
+          }
+        }
+
+        img {
+          height: 40px;
+          width: auto;
+          display: block;
+          margin: 0 auto;
+          filter: grayscale(1) brightness(65%);
+          transition: filter 0.2s ease-in-out;
+          transition-delay: 0.05s;
+        }
+
+        span {
+          font-size: 0.75rem;
+          color: var(--text-color);
+          text-transform: uppercase;
+          font-weight: bold;
+        }
+      }
+    }
+  }
+</style>

@@ -1,0 +1,132 @@
+---
+import IconPlus from "./elements/IconPlus.astro";
+import PlusBox from "./elements/PlusBox.astro";
+import HeroHeading from "./HeroHeading.astro";
+import Button from "./elements/Button.astro";
+import ProtolithShader from "./ProtolithShader.astro";
+---
+<section class="hero-section">
+  <div class="hero-text">
+    <PlusBox variant="inverted" class="heading-container">
+      <HeroHeading />
+    </PlusBox>
+    <PlusBox class="description-container">
+      <p>
+        Protolith Labs is an expert-led software consultancy company specializing in high-performance MVPs, full stack
+        development and delivering production-grade foundations that enable scalable digital products.
+      </p>
+    </PlusBox>
+    <div class="actions-container">
+      <Button>Get in touch</Button>
+      <Button variant="text">Available services</Button>
+    </div>
+  </div>
+  <div class="hero-animation">
+    <PlusBox variant="all" class="animation-container">
+      <ProtolithShader class="shader" />
+    </PlusBox>
+  </div>
+</section>
+
+<style lang="scss">
+  .hero-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    padding-top: 5rem;
+    overflow: hidden;
+
+    @media (min-width: 1220px) {
+      overflow: visible;
+    }
+
+    @media (min-width: 1024px) {
+      flex-direction: row;
+      justify-content: space-between;
+      height: 100dvh;
+      padding-top: 0;
+    }
+  }
+
+  .heading-container {
+    max-width: 100%;
+    text-align: center;
+
+    @media (min-width: 1024px) {
+      text-align: left;
+      z-index: 2;
+      margin-bottom: 1.5rem;
+    }
+  }
+
+  .description-container {
+    margin-bottom: 2rem;
+    text-align: center;
+
+    @media (min-width: 1024px) {
+      text-align: left;
+      z-index: 2;
+    }
+  }
+
+  .actions-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1rem;
+
+    @media (min-width: 768px) {
+      flex-direction: row;
+    }
+
+    @media (min-width: 1024px) {
+      padding-left: 2rem;
+      justify-content: flex-start;
+    }
+  }
+
+  .hero-text {
+    max-width: 100%;
+    padding: 0.75rem;
+
+    @media (min-width: 1024px) {
+      max-width: 60%;
+      flex: 1 1 60%;
+      padding: 0;
+    }
+
+    p {
+      font-size: 1.25rem;
+      padding: 1rem 2rem;
+      position: relative;
+
+      @media (min-width: 1024px) {
+        font-size: 1.125rem;
+      }
+    }
+  }
+
+  .hero-animation {
+    flex: 1 1 auto;
+    max-width: 100%;
+    padding: 0.75rem;
+    z-index: 1;
+    height: 20vh;
+    max-height: 20vh;
+
+    @media (min-width: 1024px) {
+      flex: 1 1 40%;
+      max-width: 40%;
+      padding: 0;
+      height: 50vh;
+      max-height: unset;
+    }
+  }
+
+  .animation-container {
+    height: 100%;
+  }
+</style>

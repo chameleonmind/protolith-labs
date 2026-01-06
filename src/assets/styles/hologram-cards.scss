@@ -1,0 +1,105 @@
+.hologram-card canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.hologram-card::before {
+  z-index: 2;
+}
+
+.hologram-card::after {
+  z-index: 3;
+}
+
+.hologram-card img.icon {
+  z-index: 1; /* fallback icon if you want */
+}
+
+.hologram-card {
+  border-radius: calc(var(--radius) * 4 - 1px) calc(var(--radius) * 4 - 1px) 0 0;
+  overflow: hidden;
+  min-height: 240px;
+  position: relative;
+
+  --mx: 50%;
+  --my: 50%;
+  --rx: 0deg;
+  --ry: 0deg;
+  --glare: 0;
+  --holo: linear-gradient(120deg, #7f38dc, #cf0177, #ff5641);
+
+  /* tune */
+  --tilt: 24deg;
+  --glare-strength: 0.45;
+  transform-style: preserve-3d;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: -30%;
+    pointer-events: none;
+
+    background: radial-gradient(
+                    circle at var(--mx) var(--my),
+                    rgba(255, 255, 255, calc(var(--glare) * var(--glare-strength))) 0%,
+                    rgba(255, 255, 255, calc(var(--glare) * var(--glare-strength) * 0.35)) 18%,
+                    rgba(255, 255, 255, 0) 55%
+    );
+
+    mix-blend-mode: overlay;
+    transform: translateZ(1px);
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 100px;
+    height: 100px;
+    pointer-events: none;
+
+    transform: translate(-50%, -50%) perspective(700px) rotateX(var(--rx)) rotateY(var(--ry)) translateZ(8px);
+
+    will-change: transform, background-position;
+
+    background: var(--holo);
+    background-size: 220% 220%;
+    background-position: var(--mx) var(--my);
+
+    -webkit-mask: var(--icon-url) center / contain no-repeat;
+    mask: var(--icon-url) center / contain no-repeat;
+
+    mix-blend-mode: multiply;
+    opacity: 0.95;
+    filter: saturate(1.2) contrast(1.05);
+  }
+
+  img.icon {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 150px;
+    height: 150px;
+
+    transform: translate(-50%, -50%);
+    opacity: 0;
+  }
+
+  .icon-holo {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 100px; /* match your icon size */
+    height: 100px;
+    transform: translate(-50%, -50%) perspective(700px) rotateX(var(--rx)) rotateY(var(--ry)) translateZ(9px);
+
+    pointer-events: none;
+    opacity: 0.55;
+    background: linear-gradient(120deg, #7f38dc, #cf0177, #ff5641);
+    background-size: 200% 200%;
+    background-position: var(--mx) var(--my);
+    mix-blend-mode: screen;
+  }
+}

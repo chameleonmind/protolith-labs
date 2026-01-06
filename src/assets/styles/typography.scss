@@ -1,0 +1,45 @@
+html, body {
+  font-family: "Manrope", Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  color: var(--text-color);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Funnel Display", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 700;
+  font-style: normal;
+  text-wrap-style: balance;
+}
+
+h1 {
+  font-size: 3rem;
+}
+
+h2 {
+  font-size: 2.5rem;
+  line-height: 1.2;
+}
+
+p {
+  font-size: 1.125rem;
+  text-wrap-style: pretty;
+}
+
+strong {
+  font-weight: 600;
+}
+
+.gradient-text {
+  background: linear-gradient(90deg, var(--accent-color), var(--accent-dark));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.font-bold {
+  font-weight: 700;
+}
+
+.font-black {
+    font-weight: 900;
+}

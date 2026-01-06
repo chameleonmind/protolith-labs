@@ -1,0 +1,45 @@
+---
+const { class: className = "", ...rest } = Astro.props;
+const lineOne = "Turn Raw Ideas Into";
+const lineTwo = "Refined Products";
+---
+
+<h1 class={className} {...rest}>
+  {lineOne} <strong>{lineTwo}</strong>
+</h1>
+
+<style lang="scss">
+  h1 {
+    font-size: 3rem;
+    padding: 1rem 2rem;
+    line-height: 1.1;
+    font-weight: 100;
+    letter-spacing: -1px;
+    cursor: default;
+    user-select: none;
+
+    strong {
+      font-weight: 800;
+      letter-spacing: 2px;
+      display: block;
+      background: linear-gradient(90deg, var(--accent-color), var(--accent-dark));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    span {
+      display: inline-block;
+      min-width: 0.75rem;
+      transition: filter 150ms ease-in-out;
+    }
+
+    span:hover {
+      filter: blur(4px);
+    }
+
+    @media (min-width: 1024px) {
+      font-size: 4rem;
+      padding: 1rem 2rem;
+    }
+  }
+</style>
