@@ -181,7 +181,7 @@ const id = `sticky-header-${Math.random().toString(36).slice(2)}`
     position: absolute;
     right: 0;
     top: calc(100% + 0.6rem);
-    width: 220px;
+    min-width: 160px;
     padding: 0.35rem;
     border-radius: 14px;
     background: rgba(255, 255, 255, 0.92);
@@ -191,11 +191,15 @@ const id = `sticky-header-${Math.random().toString(36).slice(2)}`
   }
 
   .sticky-header[data-menu-open="true"] .sticky-header__menu {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.25rem;
   }
 
   .sticky-header__menuItem {
-    display: block;
+    display: inline-flex;
     padding: 0.7rem 0.75rem;
     border-radius: 10px;
     text-decoration: none;

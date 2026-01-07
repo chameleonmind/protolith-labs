@@ -82,7 +82,52 @@
       <span>Submit</span>
     </button>
   </form>
+
+  <div class="contact__success" hidden>
+    <div class="contact__success-icon" aria-hidden="true">
+      <svg width="64" height="64" viewBox="0 0 24 24" fill="none">
+        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+        <path d="M8 12l2.5 2.5L16 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <h3>Message sent!</h3>
+    <p>Thanks for reaching out. I'll get back to you within a day or two.</p>
+  </div>
 </section>
+
+<script>
+  const form = document.querySelector('.contact__form') as HTMLFormElement;
+  const successMessage = document.querySelector('.contact__success') as HTMLElement;
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const submitBtn = form.querySelector('.contact__submit') as HTMLButtonElement;
+    const originalText = submitBtn.innerHTML;
+    submitBtn.innerHTML = '<span>Sending...</span>';
+    submitBtn.disabled = true;
+
+    try {
+      const formData = new FormData(form);
+      const response = await fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(formData as any).toString()
+      });
+
+      if (response.ok) {
+        form.hidden = true;
+        successMessage.hidden = false;
+      } else {
+        throw new Error('Form submission failed');
+      }
+    } catch (error) {
+      submitBtn.innerHTML = originalText;
+      submitBtn.disabled = false;
+      alert('Something went wrong. Please try again or email directly.');
+    }
+  });
+</script>
 
 <style lang="scss">
   .contact {
@@ -226,6 +271,26 @@
 
     .hidden {
       display: none;
+    }
+
+    &__success {
+      text-align: center;
+      padding: 3rem 1rem;
+
+      h3 {
+        font-size: 1.75rem;
+        margin-bottom: 0.5rem;
+        color: var(--text-color);
+      }
+
+      p {
+        color: var(--text-color-light);
+      }
+    }
+
+    &__success-icon {
+      color: var(--success-color);
+      margin-bottom: 1.5rem;
     }
   }
 </style>
