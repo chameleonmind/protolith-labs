@@ -1,5 +1,16 @@
 ---
 import GradientBorder from "./elements/GradientBorder.astro";
+import serviceGlass1 from "../assets/images/service_glass_1.png";
+import serviceGlass2 from "../assets/images/service_glass_2.png";
+import serviceGlass3 from "../assets/images/service_glass_3.png";
+import serviceGlass4 from "../assets/images/service_glass_4.png";
+
+const steps = [
+  { title: "Discovery", ordinal: "01", description: "We talk through your product, constraints, and what success looks like. I ask annoying but necessary questions.", bgImage: serviceGlass1 },
+  { title: "Proposal & Scope", ordinal: "02", description: "You get a clear scope, timeline, and pricing model (fixed, phase-based, or retainer). No mystery billing.", bgImage: serviceGlass2 },
+  { title: "Build & Iterate", ordinal: "03", description: "Design, implementation, and short feedback loops. Frequent check-ins, working software early, not a big reveal at the end.", bgImage: serviceGlass3 },
+  { title: "Handoff & Support", ordinal: "04", description: "Documentation, walkthroughs, and support options so your team isn't lost when we're done.", bgImage: serviceGlass4 },
+];
 ---
 <section id="process" class="how">
   <div class="how__heading" aria-hidden="true">
@@ -11,53 +22,19 @@ import GradientBorder from "./elements/GradientBorder.astro";
     </p>
   </div>
   <ul class="how__steps">
-    <GradientBorder as="li">
-      <div class="how__steps--inner">
-        <div class="how__steps--wrapper">
-          <h3>Discovery</h3>
-          <div class="how__steps--content">
-            <span class="ordinal">01</span>
-            <p>We talk through your product, constraints, and what success looks like. I ask annoying but necessary
-              questions.</p>
+    {steps.map((step) => (
+      <GradientBorder as="li">
+        <div class="how__steps--inner" style={`--bg-image: url(${step.bgImage.src})`}>
+          <div class="how__steps--wrapper">
+            <h3>{step.title}</h3>
+            <div class="how__steps--content">
+              <span class="ordinal">{step.ordinal}</span>
+              <p>{step.description}</p>
+            </div>
           </div>
         </div>
-      </div>
-    </GradientBorder>
-    <GradientBorder as="li">
-      <div class="how__steps--inner">
-        <div class="how__steps--wrapper">
-          <h3>Proposal & Scope</h3>
-          <div class="how__steps--content">
-            <span class="ordinal">02</span>
-            <p>You get a clear scope, timeline, and pricing model (fixed, phase-based, or retainer). No mystery
-              billing.</p>
-          </div>
-        </div>
-      </div>
-    </GradientBorder>
-    <GradientBorder as="li">
-      <div class="how__steps--inner">
-        <div class="how__steps--wrapper">
-          <h3>Build & Iterate</h3>
-          <div class="how__steps--content">
-            <span class="ordinal">03</span>
-            <p>Design, implementation, and short feedback loops. Frequent check-ins, working software early, not a big
-              reveal at the end.</p>
-          </div>
-        </div>
-      </div>
-    </GradientBorder>
-    <GradientBorder as="li">
-      <div class="how__steps--inner">
-        <div class="how__steps--wrapper">
-          <h3>Handoff & Support</h3>
-          <div class="how__steps--content">
-            <span class="ordinal">04</span>
-            <p>Documentation, walkthroughs, and support options so your team isn’t lost when we’re done.</p>
-          </div>
-        </div>
-      </div>
-    </GradientBorder>
+      </GradientBorder>
+    ))}
   </ul>
 </section>
 
@@ -124,7 +101,6 @@ import GradientBorder from "./elements/GradientBorder.astro";
       li {
         position: relative;
         width: 100%;
-        /*width: 75%;*/
         cursor: default;
         box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
         margin-bottom: 1rem;
@@ -139,60 +115,32 @@ import GradientBorder from "./elements/GradientBorder.astro";
         }
 
         &:nth-child(1) {
-          /*top: 0;*/
-          /*left: 1rem;*/
-
           @media (min-width: 768px) {
             top: 0;
             left: 0;
           }
-
-          .how__steps--inner::after {
-            background: url("../assets/images/service_glass_1.png");
-          }
         }
 
         &:nth-child(2) {
-          /*top: 10%;*/
-          /*right: 1rem;*/
-
           @media (min-width: 768px) {
             top: 10%;
             right: auto;
             left: 18.33334%;
           }
-
-          .how__steps--inner::after {
-            background: url("../assets/images/service_glass_2.png");
-          }
         }
 
         &:nth-child(3) {
-          /*top: 20%;*/
-          /*left: 2rem;*/
-
           @media (min-width: 768px) {
             top: 20%;
             left: 36.66667%;
           }
-
-          .how__steps--inner::after {
-            background: url("../assets/images/service_glass_3.png");
-          }
         }
 
         &:nth-child(4) {
-          /*top: 30%;*/
-          /*right: 2rem;*/
-
           @media (min-width: 768px) {
             top: 30%;
             right: auto;
             left: 55%;
-          }
-
-          .how__steps--inner::after {
-            background: url("../assets/images/service_glass_4.png");
           }
         }
 
@@ -228,6 +176,9 @@ import GradientBorder from "./elements/GradientBorder.astro";
           z-index: 1;
           opacity: 0.35;
           transition: opacity 0.3s ease;
+          background: var(--bg-image);
+          background-size: cover;
+          background-position: center;
         }
 
         > * {

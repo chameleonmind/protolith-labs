@@ -1,3 +1,11 @@
+---
+interface Props {
+	title?: string;
+}
+
+const { title = "Protolith Labs" } = Astro.props;
+---
+
 <!doctype html>
 <html lang="en">
 	<head>
@@ -8,9 +16,24 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300..800&family=Manrope:wght@200..800&display=swap" rel="stylesheet">
 		<meta name="generator" content={Astro.generator} />
-		<title>Protolith Labs</title>
+		<title>{title}</title>
 	</head>
 	<body>
+		<!-- Hidden form for Netlify to detect during build -->
+		<form name="contact" netlify netlify-honeypot="bot-field" hidden>
+			<input type="text" name="name" />
+			<input type="email" name="email" />
+			<input type="text" name="company" />
+			<select name="project-type">
+				<option value="mvp">MVP / New product</option>
+				<option value="refactor">Existing app refactor</option>
+				<option value="consulting">Frontend consulting</option>
+				<option value="design">Design</option>
+				<option value="other">Other</option>
+			</select>
+			<textarea name="message"></textarea>
+		</form>
+
 		<slot />
 	</body>
 </html>
