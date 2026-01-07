@@ -30,7 +30,7 @@ const defaultFaqs: FAQItem[] = [
 const { faqs = defaultFaqs } = Astro.props;
 ---
 
-<section class="faq">
+<section id="faq" class="faq">
   <h2>FAQ</h2>
   <div class="faq__list">
     {faqs.map((item) => (

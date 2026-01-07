@@ -1,7 +1,7 @@
 ---
 import GradientBorder from "./elements/GradientBorder.astro";
 ---
-<section class="how">
+<section id="process" class="how">
   <div class="how__heading" aria-hidden="true">
     <h2>From first call to <span class="gradient-text">shipped release</span></h2>
     <p>
@@ -128,12 +128,14 @@ import GradientBorder from "./elements/GradientBorder.astro";
         cursor: default;
         box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
         margin-bottom: 1rem;
+        height: 35vh;
 
         @media (min-width: 768px) {
           position: absolute;
           width: 45%;
           aspect-ratio: 1/1;
           margin-bottom: 0;
+          height: unset;
         }
 
         &:nth-child(1) {
@@ -244,8 +246,12 @@ import GradientBorder from "./elements/GradientBorder.astro";
       }
 
       &--wrapper {
-        padding-top: 10rem;
-        background: linear-gradient(180deg, transparent 0%, var(--background-light) 100%)
+        padding-top: 3rem;
+        background: linear-gradient(180deg, transparent 0%, var(--background-light) 100%);
+
+        @media (min-width: 768px) {
+          padding-top: 10rem;
+        }
       }
 
       &--content {

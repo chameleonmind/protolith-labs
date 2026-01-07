@@ -17,9 +17,9 @@ const {
   siteName = 'Protolith Labs',
   links = [
     { href: '#services', label: 'Services' },
-    // { href: '/work', label: 'Work' },
-    // { href: '/about', label: 'About' },
-    // { href: '/contact', label: 'Contact' },
+    { href: '#process', label: 'Process' },
+    { href: '#availability', label: 'Availability' },
+    { href: '#contact', label: 'Contact' },
   ],
   shrinkAfterPx = 200,
   maxWidthPx = 1200,
@@ -34,31 +34,35 @@ const id = `sticky-header-${Math.random().toString(36).slice(2)}`
       {siteName}
     </a>
 
-    <nav class="sticky-header__nav" aria-label="Primary navigation">
-      <ul class="sticky-header__links">
-        {links.map((l) => (
-          <li><Button variant="text" class="sticky-header__link" href={l.href}>{l.label}</Button></li>
-        ))}
-      </ul>
-    </nav>
+    {links.length > 0 && (
+      <nav class="sticky-header__nav" aria-label="Primary navigation">
+        <ul class="sticky-header__links">
+          {links.map((l) => (
+            <li><Button variant="text" class="sticky-header__link" href={l.href}>{l.label}</Button></li>
+          ))}
+        </ul>
+      </nav>
+    )}
 
-    <div class="sticky-header__mobile">
-      <button
-        class="sticky-header__menuBtn"
-        type="button"
-        aria-haspopup="menu"
-        aria-expanded="false"
-      >
-        Menu
-        <span class="sticky-header__chev" aria-hidden="true">▾</span>
-      </button>
+    {links.length > 0 && (
+      <div class="sticky-header__mobile">
+        <button
+          class="sticky-header__menuBtn"
+          type="button"
+          aria-haspopup="menu"
+          aria-expanded="false"
+        >
+          Menu
+          <span class="sticky-header__chev" aria-hidden="true">▾</span>
+        </button>
 
-      <div class="sticky-header__menu" role="menu" aria-label="Mobile menu">
-        {links.map((l) => (
-          <Button variant="text" class="sticky-header__menuItem" role="menuitem" href={l.href}>{l.label}</Button>
-        ))}
+        <div class="sticky-header__menu" role="menu" aria-label="Mobile menu">
+          {links.map((l) => (
+            <Button variant="text" class="sticky-header__menuItem" role="menuitem" href={l.href}>{l.label}</Button>
+          ))}
+        </div>
       </div>
-    </div>
+    )}
   </div>
 </header>
 
