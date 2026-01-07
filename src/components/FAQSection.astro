@@ -30,7 +30,7 @@ const defaultFaqs: FAQItem[] = [
 const { faqs = defaultFaqs } = Astro.props;
 ---
 
-<section class="faq">
+<section id="faq" class="faq">
   <h2>FAQ</h2>
   <div class="faq__list">
     {faqs.map((item) => (
@@ -51,7 +51,7 @@ const { faqs = defaultFaqs } = Astro.props;
 
 <style lang="scss">
   .faq {
-    padding: 4rem 0;
+    padding: 2rem 1rem;
 
     h2 {
       text-align: center;

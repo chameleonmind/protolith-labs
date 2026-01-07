@@ -1,0 +1,189 @@
+---
+import "../assets/styles/reset.scss";
+import "../assets/styles/variables.scss";
+import "../assets/styles/typography.scss";
+import Layout from "../layouts/Layout.astro";
+import StickyHeader from "../components/StickyHeader.astro";
+import Footer from "../components/Footer.astro";
+import PageContainer from "../components/PageContainer.astro";
+---
+
+<Layout title="Privacy Policy | Protolith Labs" description="Privacy Policy for Protolith Labs. Learn how we handle your personal data.">
+  <StickyHeader links={[]} />
+  <main>
+    <PageContainer>
+      <article class="privacy">
+        <h1>Privacy Policy</h1>
+        <div class="privacy__content">
+          <p><small>Last updated: January 2026</small></p>
+
+          <h2>1. Who we are</h2>
+          <p>Protolith Labs is an independent software consulting practice based in Niš, Serbia.</p>
+          <p><strong>Data controller:</strong></p>
+          <address>
+            Protolith Labs<br>
+            Email: <a href="mailto:hello@protolith-labs.com">hello@protolith-labs.com</a>
+          </address>
+          <p>This website is operated for the purpose of presenting consulting services and allowing potential clients to get in touch.</p>
+
+          <h2>2. What personal data we collect</h2>
+          <p>We only collect personal data that you voluntarily provide to us.</p>
+          <p>This may include:</p>
+          <ul>
+            <li>Your name</li>
+            <li>Your email address</li>
+            <li>The content of your message submitted through the contact form</li>
+          </ul>
+          <p>In addition, basic technical data such as IP address, browser type, and timestamp may be processed automatically through standard server logs for security and operational purposes.</p>
+
+          <h2>3. How we use your data</h2>
+          <p>We use your personal data solely to:</p>
+          <ul>
+            <li>Respond to your inquiry</li>
+            <li>Communicate with you about a potential collaboration</li>
+            <li>Maintain basic business correspondence records</li>
+          </ul>
+          <p>We do not use your data for marketing purposes, automated profiling, or advertising.</p>
+
+          <h2>4. Legal basis for processing</h2>
+          <p>We process your personal data based on:</p>
+          <ul>
+            <li>Your consent, given when you submit the contact form</li>
+            <li>Legitimate interest, limited to responding to inquiries and conducting business communication</li>
+          </ul>
+          <p>You may withdraw your consent at any time by contacting us.</p>
+
+          <h2>5. Data retention</h2>
+          <p>Personal data submitted through the contact form is retained only for as long as necessary to:</p>
+          <ul>
+            <li>Respond to your inquiry</li>
+            <li>Continue related communication, if applicable</li>
+          </ul>
+          <p>Data may be retained longer if required for legal, contractual, or accounting obligations. When no longer needed, data is deleted or anonymized.</p>
+
+          <h2>6. Data sharing</h2>
+          <p>We do not sell, rent, or trade your personal data.</p>
+          <p>Your data may be processed by trusted service providers (such as email or hosting providers) strictly for the purpose of operating this website and communicating with you. These providers process data only under our instructions and are subject to appropriate data protection obligations.</p>
+
+          <h2>7. Your rights</h2>
+          <p>Under applicable data protection laws, you have the right to:</p>
+          <ul>
+            <li>Request access to your personal data</li>
+            <li>Request correction of inaccurate or incomplete data</li>
+            <li>Request deletion of your personal data</li>
+            <li>Withdraw consent at any time</li>
+          </ul>
+          <p>To exercise any of these rights, please contact: <a href="mailto:hello@protolith-labs.com">hello@protolith-labs.com</a></p>
+
+          <h2>8. Cookies</h2>
+          <p>This website does not use tracking, analytics, or advertising cookies.</p>
+          <p>Only essential technical cookies may be used where strictly necessary for the basic operation of the site.</p>
+
+          <h2>9. Data security</h2>
+          <p>We take reasonable technical and organizational measures to protect personal data from unauthorized access, loss, or misuse. However, no method of transmission over the internet is completely secure.</p>
+
+          <h2>10. Changes to this policy</h2>
+          <p>This Privacy Policy may be updated from time to time. The most current version will always be available on this page, with the updated date indicated at the top.</p>
+
+          <h2>11. Contact</h2>
+          <p>If you have any questions about this Privacy Policy or how your data is handled, you may contact:</p>
+          <address>
+            Protolith Labs<br>
+            Email: <a href="mailto:hello@protolith-labs.com">hello@protolith-labs.com</a>
+          </address>
+        </div>
+      </article>
+    </PageContainer>
+  </main>
+  <Footer />
+</Layout>
+
+<style lang="scss">
+  main {
+    display: block;
+    width: 100%;
+    background-image: linear-gradient(90deg, var(--background-darker) 0%, var(--background-light) 50%, var(--background-darker) 100%);
+    position: relative;
+    min-height: 100vh;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100dvh;
+      background: radial-gradient(circle at 20% 20%, var(--accent-color), transparent 50%), radial-gradient(circle at 80% 80%, var(--highlight-color), transparent 50%);
+      background-blend-mode: screen;
+      backdrop-filter: blur(20px);
+      z-index: 0;
+      opacity: 0.15;
+    }
+
+    > * {
+      position: relative;
+      z-index: 1;
+    }
+  }
+
+  .privacy {
+    padding: 6rem 0 4rem;
+    max-width: 800px;
+    margin: 0 auto;
+
+    h1 {
+      margin-bottom: 2rem;
+    }
+
+    &__content {
+      h2 {
+        font-size: 1.5rem;
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+      }
+
+      h3 {
+        font-size: 1.25rem;
+        margin-top: 1.5rem;
+        margin-bottom: 0.75rem;
+      }
+
+      p {
+        margin-bottom: 1rem;
+        line-height: 1.7;
+        color: var(--text-color-light);
+      }
+
+      ul, ol {
+        margin-bottom: 1rem;
+        padding-left: 1.5rem;
+
+        li {
+          margin-bottom: 0.5rem;
+          line-height: 1.6;
+          color: var(--text-color-light);
+        }
+      }
+
+      ul {
+        list-style-type: square;
+      }
+
+      a {
+        color: var(--accent-color);
+        text-decoration: underline;
+
+        &:hover {
+          text-decoration: none;
+        }
+      }
+
+      address {
+        font-style: normal;
+        margin-bottom: 1rem;
+        line-height: 1.7;
+        color: var(--text-color-light);
+      }
+    }
+  }
+</style>

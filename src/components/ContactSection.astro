@@ -1,0 +1,296 @@
+---
+
+---
+
+<section id="contact" class="contact">
+  <h2>Tell me about <span class="gradient-text">your project</span></h2>
+  <p class="contact__description">
+    Send a few lines about what you're working on, timelines, and what you're trying to achieve.
+    I'll get back to you with questions or suggest a quick intro call.
+  </p>
+  <p class="contact__note">No spam. No mailing list. Just a reply about your project.</p>
+
+  <form
+    class="contact__form"
+    name="contact"
+    method="POST"
+    data-netlify="true"
+    netlify-honeypot="bot-field"
+  >
+    <input type="hidden" name="form-name" value="contact" />
+    <p class="hidden">
+      <label>
+        Don't fill this out if you're human: <input name="bot-field" />
+      </label>
+    </p>
+
+    <div class="contact__field">
+      <label for="name">Name</label>
+      <input
+        type="text"
+        id="name"
+        name="name"
+        required
+        autocomplete="name"
+      />
+    </div>
+
+    <div class="contact__field">
+      <label for="email">Email</label>
+      <input
+        type="email"
+        id="email"
+        name="email"
+        required
+        autocomplete="email"
+      />
+    </div>
+
+    <div class="contact__field">
+      <label for="company">Company <span class="optional">(optional)</span></label>
+      <input
+        type="text"
+        id="company"
+        name="company"
+        autocomplete="organization"
+      />
+    </div>
+
+    <div class="contact__field">
+      <label for="project-type">Project type</label>
+      <select id="project-type" name="project-type" required>
+        <option value="" disabled selected>Select a project type</option>
+        <option value="mvp">MVP / New product</option>
+        <option value="refactor">Existing app refactor</option>
+        <option value="consulting">Frontend consulting</option>
+        <option value="design">Design</option>
+        <option value="other">Other</option>
+      </select>
+    </div>
+
+    <div class="contact__field">
+      <label for="message">Message</label>
+      <textarea
+        id="message"
+        name="message"
+        rows="5"
+        required
+      ></textarea>
+    </div>
+
+    <button type="submit" class="contact__submit">
+      <span>Submit</span>
+    </button>
+  </form>
+
+  <div class="contact__success" hidden>
+    <div class="contact__success-icon" aria-hidden="true">
+      <svg width="64" height="64" viewBox="0 0 24 24" fill="none">
+        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+        <path d="M8 12l2.5 2.5L16 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <h3>Message sent!</h3>
+    <p>Thanks for reaching out. I'll get back to you within a day or two.</p>
+  </div>
+</section>
+
+<script>
+  const form = document.querySelector('.contact__form') as HTMLFormElement;
+  const successMessage = document.querySelector('.contact__success') as HTMLElement;
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const submitBtn = form.querySelector('.contact__submit') as HTMLButtonElement;
+    const originalText = submitBtn.innerHTML;
+    submitBtn.innerHTML = '<span>Sending...</span>';
+    submitBtn.disabled = true;
+
+    try {
+      const formData = new FormData(form);
+      const response = await fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(formData as any).toString()
+      });
+
+      if (response.ok) {
+        form.hidden = true;
+        successMessage.hidden = false;
+      } else {
+        throw new Error('Form submission failed');
+      }
+    } catch (error) {
+      submitBtn.innerHTML = originalText;
+      submitBtn.disabled = false;
+      alert('Something went wrong. Please try again or email directly.');
+    }
+  });
+</script>
+
+<style lang="scss">
+  .contact {
+    padding: 2rem 1rem;
+    max-width: 640px;
+    margin: 0 auto;
+
+    h2 {
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+
+    &__description {
+      text-align: center;
+      color: var(--text-color-light);
+      margin-bottom: 0.5rem;
+    }
+
+    &__note {
+      text-align: center;
+      font-size: 0.875rem;
+      color: var(--text-color-light);
+      opacity: 0.8;
+      margin-bottom: 2.5rem;
+    }
+
+    &__form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    &__field {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+
+      label {
+        font-weight: 600;
+        font-size: 0.9375rem;
+
+        .optional {
+          font-weight: 400;
+          color: var(--text-color-light);
+        }
+      }
+
+      input,
+      select,
+      textarea {
+        padding: 0.875rem 1rem;
+        font-size: 1rem;
+        font-family: inherit;
+        background-color: var(--background-light);
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius);
+        color: var(--text-color);
+        transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+        &:hover {
+          border-color: rgba(44, 44, 48, 0.2);
+        }
+
+        &:focus {
+          outline: none;
+          border-color: var(--accent-color);
+          box-shadow: 0 0 0 3px var(--accent-color-5);
+        }
+
+        &::placeholder {
+          color: var(--text-color-light);
+          opacity: 0.6;
+        }
+      }
+
+      select {
+        cursor: pointer;
+        appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%232c2c30' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 1rem center;
+        padding-right: 2.5rem;
+      }
+
+      textarea {
+        resize: vertical;
+        min-height: 120px;
+      }
+    }
+
+    &__submit {
+      margin-top: 0.5rem;
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      font-weight: bold;
+      font-family: inherit;
+      color: white;
+      background: linear-gradient(135deg, var(--accent-color), var(--accent-dark));
+      border: none;
+      border-radius: var(--radius);
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      transition: all 0.4s ease;
+      -webkit-tap-highlight-color: transparent;
+
+      &:hover {
+        transform: scale(1.015);
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+
+        span {
+          animation: toggle-animation 0.2s ease-in-out forwards;
+        }
+      }
+
+      &:focus-visible {
+        outline: 2px solid var(--accent-color);
+        outline-offset: 2px;
+      }
+    }
+
+    @keyframes toggle-animation {
+      0% {
+        transform: translateY(0);
+      }
+      33% {
+        transform: translateY(-100%);
+        opacity: 0;
+      }
+      66% {
+        transform: translateY(100%);
+        opacity: 0;
+      }
+      100% {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    &__success {
+      text-align: center;
+      padding: 3rem 1rem;
+
+      h3 {
+        font-size: 1.75rem;
+        margin-bottom: 0.5rem;
+        color: var(--text-color);
+      }
+
+      p {
+        color: var(--text-color-light);
+      }
+    }
+
+    &__success-icon {
+      color: var(--success-color);
+      margin-bottom: 1.5rem;
+    }
+  }
+</style>

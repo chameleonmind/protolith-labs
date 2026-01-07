@@ -1,16 +1,80 @@
+---
+interface Props {
+	title?: string;
+	description?: string;
+}
+
+const siteName = "Protolith Labs";
+const defaultDescription = "Expert-led full-stack product consultancy.";
+const siteUrl = "https://protolith-labs.com";
+const ogImage = "/images/Protolith_Labs_image.png";
+
+const {
+	title = siteName,
+	description = defaultDescription
+} = Astro.props;
+
+const fullTitle = title === siteName ? `${siteName} — ${defaultDescription}` : title;
+const canonicalUrl = new URL(Astro.url.pathname, siteUrl).href;
+const ogImageUrl = new URL(ogImage, siteUrl).href;
+---
+
 <!doctype html>
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
+
+		<!-- Primary Meta Tags -->
+		<title>{fullTitle}</title>
+		<meta name="title" content={fullTitle} />
+		<meta name="description" content={description} />
+
+		<!-- Canonical -->
+		<link rel="canonical" href={canonicalUrl} />
+
+		<!-- Favicon -->
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+		<!-- Open Graph / Facebook -->
+		<meta property="og:type" content="website" />
+		<meta property="og:url" content={canonicalUrl} />
+		<meta property="og:site_name" content={siteName} />
+		<meta property="og:title" content={fullTitle} />
+		<meta property="og:description" content={description} />
+		<meta property="og:image" content={ogImageUrl} />
+
+		<!-- Twitter -->
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:url" content={canonicalUrl} />
+		<meta name="twitter:title" content={fullTitle} />
+		<meta name="twitter:description" content={description} />
+		<meta name="twitter:image" content={ogImageUrl} />
+
+		<!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300..800&family=Manrope:wght@200..800&display=swap" rel="stylesheet">
+
+		<!-- Generator -->
 		<meta name="generator" content={Astro.generator} />
-		<title>Protolith Labs</title>
 	</head>
 	<body>
+		<!-- Hidden form for Netlify to detect during build -->
+		<form name="contact" netlify netlify-honeypot="bot-field" hidden>
+			<input type="text" name="name" />
+			<input type="email" name="email" />
+			<input type="text" name="company" />
+			<select name="project-type">
+				<option value="mvp">MVP / New product</option>
+				<option value="refactor">Existing app refactor</option>
+				<option value="consulting">Frontend consulting</option>
+				<option value="design">Design</option>
+				<option value="other">Other</option>
+			</select>
+			<textarea name="message"></textarea>
+		</form>
+
 		<slot />
 	</body>
 </html>
