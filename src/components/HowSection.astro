@@ -14,8 +14,8 @@ const steps = [
 ---
 <section id="process" class="how">
   <div class="how__heading" aria-hidden="true">
-    <h2>From first call to <span class="gradient-text">shipped release</span></h2>
-    <p>
+    <h2 data-animate-entry>From first call to <span class="gradient-text">shipped release</span></h2>
+    <p data-animate-entry>
       <strong>Good products aren’t built by accident.</strong><br>
       From the first call to the shipped release, each step is deliberate,
       transparent, and designed to move the product forward without unnecessary complexity.
@@ -23,7 +23,7 @@ const steps = [
   </div>
   <ul class="how__steps">
     {steps.map((step) => (
-      <GradientBorder as="li">
+      <GradientBorder as="li" data-animate-entry>
         <div class="how__steps--inner" style={`--bg-image: url(${step.bgImage.src})`}>
           <div class="how__steps--wrapper">
             <h3>{step.title}</h3>

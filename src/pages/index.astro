@@ -4,6 +4,7 @@ import "../assets/styles/variables.scss";
 import "../assets/styles/typography.scss";
 import "../assets/styles/cards-grid.scss";
 import "../assets/styles/hologram-cards.scss";
+import "../assets/styles/main.scss";
 import Layout from "../layouts/Layout.astro";
 import Hero from "../components/Hero.astro";
 import PageContainer from "../components/PageContainer.astro";
@@ -36,7 +37,16 @@ import ContactSection from "../components/ContactSection.astro";
   </main>
   <Footer />
 </Layout>
-
+<script>
+  import { animateEntry } from '../scripts/animate-entry'
+  animateEntry({ container: '.hero-text' })
+  animateEntry({ container: '.risk-section' })
+  animateEntry({ container: '.technology-section' })
+  animateEntry({ container: '#availability' })
+  animateEntry({ container: '.fit-section' })
+  animateEntry({ container: '.how' })
+  animateEntry({ container: '.contact' })
+</script>
 <style>
   main {
     display: block;

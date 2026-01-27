@@ -9,8 +9,8 @@ import GradientBorder from "./elements/GradientBorder.astro";
 ---
 <section class="risk-section">
   <div class="risk-section__inner" aria-hidden="true">
-    <h2>When "Good Enough" Becomes a <strong>Business Risk</strong></h2>
-    <p>
+    <h2 data-animate-entry>When "Good Enough" Becomes a <strong>Business Risk</strong></h2>
+    <p data-animate-entry>
       <strong>You shouldn’t settle for a bad software to run your business.</strong><br>
       A slow, unreliable, or insecure platform isn't just a
       technical problem – it's a direct threat to your revenue, reputation, and ability to innovate. Together we can
@@ -20,10 +20,10 @@ import GradientBorder from "./elements/GradientBorder.astro";
   </div>
 
   <PlusBox variant="all" class="risk-section__headline">
-    <h3 class="gradient-text">Engineering Excellence, Delivered.</h3>
+    <h3 class="gradient-text" data-animate-entry>Engineering Excellence, Delivered.</h3>
   </PlusBox>
   <ul class="cards-grid">
-    <GradientBorder as="li" class="card-item">
+    <GradientBorder as="li" class="card-item" data-animate-entry>
       <div class="hologram-card" data-icon-url={seniorLevelExpertiseImg.src}>
         <LinesCardShader mouseStrength={0.25} lineDensity={4} />
         <Image src={seniorLevelExpertiseImg} width="100" height="100" alt="Senior-Level Expertise Icon" />
@@ -36,7 +36,7 @@ import GradientBorder from "./elements/GradientBorder.astro";
         </p>
       </div>
     </GradientBorder>
-    <GradientBorder as="li" class="card-item">
+    <GradientBorder as="li" class="card-item" data-animate-entry>
       <div class="hologram-card" data-icon-url={predictableDeliveryImg.src}>
         <LinesCardShader mouseStrength={0.15} lineDensity={5} />
         <Image src={predictableDeliveryImg} width="100" height="100" alt="Predictable Delivery Icon" />
@@ -49,7 +49,7 @@ import GradientBorder from "./elements/GradientBorder.astro";
         </p>
       </div>
     </GradientBorder>
-    <GradientBorder as="li" class="card-item">
+    <GradientBorder as="li" class="card-item" data-animate-entry>
       <div class="hologram-card" data-icon-url={holisticQualityImg.src}>
         <LinesCardShader mouseStrength={0.35} lineDensity={4.5} />
         <Image src={holisticQualityImg} width="100" height="100" alt="Holistic Quality Icon" />
