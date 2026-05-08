@@ -13,375 +13,523 @@ import ServiceThreeBg from "../assets/images/service_glass_3.png";
 import ServiceFourBg from "../assets/images/service_glass_4.png";
 import ServiceFiveBg from "../assets/images/service_glass_5.png";
 import PlusBox from "./elements/PlusBox.astro";
+
+const services = [
+  {
+    id: "service-fullstack",
+    ordinal: "01",
+    title: "Full-stack product builds & MVPs",
+    lead: "End-to-end delivery of web apps and MVPs: backend, frontend, and basic infrastructure. Perfect if you want a working product, not just mockups and promises.",
+    bullets: [
+      "Product discovery and scope definition (features, constraints, success criteria)",
+      "Technical architecture and stack selection based on product goals",
+      "Frontend development (Vue, React, Astro) and backend development (APIs, data models, integrations)",
+      "Performance and scalability considerations from day one",
+      "Launch support, documentation, and handoff",
+    ],
+    note: "*Engagements are tailored — not every project needs every service.",
+    icon: fullStackIcon,
+    bg: ServiceOneBg,
+    alt: "Full-stack product builds & MVPs",
+    iconAlt: "Full stack icon",
+  },
+  {
+    id: "service-frontend",
+    ordinal: "02",
+    title: "Front-end consulting",
+    lead: "Architecture reviews, refactors, and feature work for existing Vue or React projects. I help teams get unstuck, improve performance, and make the codebase less painful to work in.",
+    bullets: [
+      "Codebase audits and architectural reviews",
+      "Vue 2 → Vue 3 or legacy React refactors and migrations",
+      "Performance analysis and optimization",
+      "Frontend tooling improvements (Vite, TypeScript, linting, testing)",
+      "Feature development alongside your existing team",
+      "Code reviews and technical mentorship for developers",
+      "Establishing conventions, patterns, and documentation",
+    ],
+    note: "*Engagements are tailored — not every project needs every service.",
+    icon: frontEndIcon,
+    bg: ServiceTwoBg,
+    alt: "Front-end consulting",
+    iconAlt: "Front-end consulting icon",
+  },
+  {
+    id: "service-design",
+    ordinal: "03",
+    title: "Product & UI design",
+    lead: "Clean, functional product design with a developer’s brain behind it. Flows, UX, and UI that respect both users and the implementation.",
+    bullets: [
+      "Product and UX discovery workshops",
+      "User flows and interaction design",
+      "Wireframes and high-fidelity UI design",
+      "Design systems and reusable component patterns",
+      "UX improvements for existing products",
+      "Accessibility-aware design decisions",
+      "Design validation during implementation",
+    ],
+    note: "*Engagements are tailored — not every project needs every service.",
+    icon: designIcon,
+    bg: ServiceThreeBg,
+    alt: "Product & UI design background",
+    iconAlt: "Product & UI design icon",
+  },
+  {
+    id: "service-stabilize",
+    ordinal: "04",
+    title: "Stabilizing fast-grown products",
+    lead: "Whether it was vibe-coded or just started fast, some products are shipped early and quickly, and now feel fragile. I help teams stabilize, untangle, and evolve apps that grew without a clear structure.",
+    bullets: [
+      "Audits to identify structural, performance, and maintainability issues",
+      "Untangling rushed or inconsistent logic",
+      "Introducing clear architecture, patterns, and ownership boundaries",
+      "Reducing technical debt in a controlled, prioritized way",
+      "Creating a realistic stabilization and improvement roadmap",
+    ],
+    note: "*Sometimes the job isn’t adding new blocks — it’s making sure the existing ones actually hold.",
+    icon: stabilizeIcon,
+    bg: ServiceFourBg,
+    alt: "Stabilizing fast-grown products background",
+    iconAlt: "Stabilizing fast-grown products icon",
+  },
+  {
+    id: "service-partner",
+    ordinal: "05",
+    title: "Long-term technical partner",
+    lead: "For teams that need ongoing help but don’t want to hire full-time: code reviews, roadmap input, and hands-on development each month.",
+    bullets: [
+      "Ongoing development support",
+      "Regular code reviews and architecture guidance",
+      "Technical input for roadmap planning and prioritization",
+      "Support during critical releases or refactors",
+      "Acting as a senior engineer or fractional tech lead",
+      "Knowledge sharing and team enablement",
+    ],
+    note: "*Engagements are tailored — not every project needs every service.",
+    icon: partnerIcon,
+    bg: ServiceFiveBg,
+    alt: "Long-term technical partner background",
+    iconAlt: "Long-term technical partner icon",
+  },
+];
 ---
 <section id="services" class="solutions">
-  <h2>What <span class="gradient-text">Protolith Labs</span> can do for you</h2>
-  <div class="sticky-card">
-    <div class="sticky-card__header">
-      <h3><span class="gradient-text font-black">Full-stack</span> product builds & <span
-        class="gradient-text font-black">MVPs</span></h3>
-    </div>
-    <div class="sticky-card__content">
-      <div class="features-list">
-        <PlusBox variant="inverted">
-          <p>
-            End-to-end delivery of web apps and MVPs: backend, frontend, and basic infrastructure. Perfect if you want a
-            working product, not just mockups and promises.
-          </p>
-        </PlusBox>
-        <ul>
-          <li>Product discovery and scope definition (features, constraints, success criteria)</li>
-          <li>Technical architecture and stack selection based on product goals</li>
-          <li>Frontend development (Vue, React, Astro) and backend development (APIs, data models, integrations)</li>
-          <li>Performance and scalability considerations from day one</li>
-          <li>Launch support, documentation, and handoff</li>
-        </ul>
-        <small>*Engagements are tailored — not every project needs every service.</small>
-      </div>
-      <GradientBorder class="features-image">
-        <div class="hologram-card" data-icon-url={fullStackIcon.src}>
-          <Image src={ServiceOneBg} width={640} height={720} alt="Full-stack product builds & MVPs" />
-          <Image src={fullStackIcon} class="icon" width="100" height="100" alt="Full stack icon" />
-        </div>
-      </GradientBorder>
-    </div>
+  <div class="solutions__head">
+    <h2>What Protolith Labs can do for you</h2>
   </div>
-  <div class="sticky-card">
-    <div class="sticky-card__header">
-      <h3><span class="gradient-text font-black">Front-end</span> consulting</h3>
-    </div>
-    <div class="sticky-card__content">
-      <div class="features-list">
-        <PlusBox variant="inverted">
-          <p>
-            Architecture reviews, refactors, and feature work for existing Vue or React projects. I help teams get
-            unstuck, improve performance, and make the codebase less painful to work in.
-          </p>
-        </PlusBox>
-        <ul>
-          <li>Codebase audits and architectural reviews</li>
-          <li>Vue 2 → Vue 3 or legacy React refactors and migrations</li>
-          <li>Performance analysis and optimization</li>
-          <li>Frontend tooling improvements (Vite, TypeScript, linting, testing)</li>
-          <li>Feature development alongside your existing team</li>
-          <li>Code reviews and technical mentorship for developers</li>
-          <li>Establishing conventions, patterns, and documentation</li>
-        </ul>
-        <small>*Engagements are tailored — not every project needs every service.</small>
-      </div>
-      <GradientBorder class="features-image">
-        <div class="hologram-card" data-icon-url={frontEndIcon.src}>
-          <Image src={ServiceTwoBg} width={640} height={720} alt="Front-end consulting" />
-          <Image src={frontEndIcon} class="icon" width="100" height="100" alt="Front-end consulting icon" />
-        </div>
-      </GradientBorder>
-    </div>
-  </div>
-  <div class="sticky-card">
-    <div class="sticky-card__header">
-      <h3>Product & UI <span class="gradient-text font-black">design</span></h3>
-    </div>
-    <div class="sticky-card__content">
-      <div class="features-list">
-        <PlusBox variant="inverted">
-          <p>
-            Clean, functional product design with a developer’s brain behind it. Flows, UX, and UI that respect both
-            users and the implementation.
-          </p>
-        </PlusBox>
-        <ul>
-          <li>Product and UX discovery workshops</li>
-          <li>User flows and interaction design</li>
-          <li>Wireframes and high-fidelity UI design</li>
-          <li>Design systems and reusable component patterns</li>
-          <li>UX improvements for existing products</li>
-          <li>Accessibility-aware design decisions</li>
-          <li>Design validation during implementation</li>
-        </ul>
-        <small>*Engagements are tailored — not every project needs every service.</small>
-      </div>
-      <GradientBorder class="features-image">
-        <div class="hologram-card" data-icon-url={designIcon.src}>
-          <Image src={ServiceThreeBg} width={640} height={720} alt="Product & UI design background" />
-          <Image src={designIcon} class="icon" width="100" height="100" alt="Product & UI design icon" />
-        </div>
-      </GradientBorder>
-    </div>
-  </div>
-  <div class="sticky-card">
-    <div class="sticky-card__header">
-      <h3>Stabilizing <span class="gradient-text font-black">fast-grown</span> products</h3>
-    </div>
-    <div class="sticky-card__content">
-      <div class="features-list">
-        <PlusBox variant="inverted">
-          <p>
-            Whether it was vibe-coded or just started fast, some products are shipped early and quickly, and now feel
-            fragile. I help teams stabilize, untangle, and evolve apps that grew without a clear structure.
-          </p>
-        </PlusBox>
-        <ul>
-          <li>Audits to identify structural, performance, and maintainability issues</li>
-          <li>Untangling rushed or inconsistent logic</li>
-          <li>Introducing clear architecture, patterns, and ownership boundaries</li>
-          <li>Reducing technical debt in a controlled, prioritized way</li>
-          <li>Creating a realistic stabilization and improvement roadmap</li>
-        </ul>
-        <small>*Sometimes the job isn’t adding new blocks — it’s making sure the existing ones actually hold.</small>
-      </div>
-      <GradientBorder class="features-image">
-        <div class="hologram-card" data-icon-url={stabilizeIcon.src}>
-          <Image src={ServiceFourBg} width={640} height={720} alt="Stabilizing fast-grown products background" />
-          <Image src={stabilizeIcon} class="icon" width="100" height="100" alt="Stabilizing fast-grown products icon" />
-        </div>
-      </GradientBorder>
-    </div>
-  </div>
-  <div class="sticky-card">
-    <div class="sticky-card__header">
-      <h3><span class="gradient-text font-black">Long-term</span> technical <span class="gradient-text font-black">partner</span>
-      </h3>
-    </div>
-    <div class="sticky-card__content">
-      <div class="features-list">
-        <PlusBox variant="inverted">
-          <p>
-            For teams that need ongoing help but don’t want to hire full-time: code reviews, roadmap input, and hands-on
-            development each month.
-          </p>
-        </PlusBox>
-        <ul>
-          <li>Ongoing development support</li>
-          <li>Regular code reviews and architecture guidance</li>
-          <li>Technical input for roadmap planning and prioritization</li>
-          <li>Support during critical releases or refactors</li>
-          <li>Acting as a senior engineer or fractional tech lead</li>
-          <li>Knowledge sharing and team enablement</li>
-        </ul>
-        <small>*Engagements are tailored — not every project needs every service.</small>
-      </div>
-      <GradientBorder class="features-image">
-        <div class="hologram-card" data-icon-url={partnerIcon.src}>
-          <Image src={ServiceFiveBg} width={640} height={720} alt="Long-term technical partner background" />
-          <Image src={partnerIcon} class="icon" width="100" height="100" alt="Long-term technical partner icon" />
-        </div>
-      </GradientBorder>
+
+  <div class="solutions__layout">
+    <nav class="services-rail" aria-label="Services">
+      <ol>
+        {services.map((service, idx) => (
+          <li>
+            <a
+              href={`#${service.id}`}
+              class="services-rail__entry"
+              data-rail-link
+              data-target={service.id}
+              aria-current={idx === 0 ? "true" : undefined}
+            >
+              <span class="services-rail__num">{service.ordinal}</span>
+              <span class="services-rail__title">{service.title}</span>
+              <span class="services-rail__bar" aria-hidden="true"></span>
+            </a>
+          </li>
+        ))}
+      </ol>
+    </nav>
+
+    <div class="services-content">
+      {services.map((service) => (
+        <article id={service.id} class="service-block" data-service-block>
+          <div class="service-block__ordinal" aria-hidden="true">{service.ordinal}</div>
+          <h3 class="service-block__title">{service.title}</h3>
+          <PlusBox variant="inverted" class="service-block__lead">
+            <p>{service.lead}</p>
+          </PlusBox>
+          <div class="service-block__body">
+            <ul class="service-block__bullets">
+              {service.bullets.map((bullet) => <li>{bullet}</li>)}
+            </ul>
+            <GradientBorder class="service-block__visual">
+              <div class="hologram-card" data-icon-url={service.icon.src}>
+                <Image src={service.bg} width={640} height={720} alt={service.alt} />
+                <Image src={service.icon} class="icon" width="100" height="100" alt={service.iconAlt} />
+              </div>
+            </GradientBorder>
+          </div>
+          <small class="service-block__note">{service.note}</small>
+        </article>
+      ))}
     </div>
   </div>
 </section>
 
+<script>
+  const railLinks = Array.from(
+    document.querySelectorAll<HTMLAnchorElement>("[data-rail-link]")
+  );
+  const blocks = Array.from(
+    document.querySelectorAll<HTMLElement>("[data-service-block]")
+  );
+  const prefersReducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  ).matches;
+
+  if (railLinks.length && blocks.length) {
+    const setActive = (id: string) => {
+      railLinks.forEach((link) => {
+        if (link.dataset.target === id) {
+          link.setAttribute("aria-current", "true");
+        } else {
+          link.removeAttribute("aria-current");
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort(
+            (a, b) =>
+              (a.target as HTMLElement).getBoundingClientRect().top -
+              (b.target as HTMLElement).getBoundingClientRect().top
+          );
+
+        if (visible.length > 0) {
+          setActive(visible[0].target.id);
+        }
+      },
+      {
+        rootMargin: "-30% 0px -55% 0px",
+        threshold: 0,
+      }
+    );
+
+    blocks.forEach((block) => observer.observe(block));
+
+    railLinks.forEach((link) => {
+      link.addEventListener("click", (event) => {
+        const targetId = link.dataset.target;
+        if (!targetId) return;
+        const target = document.getElementById(targetId);
+        if (!target) return;
+
+        event.preventDefault();
+        target.scrollIntoView({
+          behavior: prefersReducedMotion ? "auto" : "smooth",
+          block: "start",
+        });
+        setActive(targetId);
+        history.replaceState(null, "", `#${targetId}`);
+      });
+    });
+  }
+</script>
+
 <style lang="scss">
   .solutions {
-    padding: 4rem 0;
+    padding: 4rem 1rem 2rem;
+    max-width: 80rem;
+    margin: 0 auto;
+
+    @media (min-width: 768px) {
+      padding: 6rem 2rem 4rem;
+    }
+  }
+
+  .solutions__head {
+    margin-bottom: 3rem;
 
     h2 {
-      font-size: 2.5rem;
-      color: var(--text-primary);
-      margin-bottom: 2rem;
-      text-align: center;
-    }
-
-    .sticky-card {
-      position: sticky;
-      top: 64px;
-
-      .sticky-card__content {
-        min-height: calc(100vh - 64px);
-      }
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--primary);
+      letter-spacing: -0.01em;
+      margin: 0;
+      text-wrap-style: balance;
 
       @media (min-width: 768px) {
-        top: 10vh;
+        font-size: 2.75rem;
+      }
+    }
 
-        .sticky-card__content {
-          min-height: 90vh;
-        }
+    @media (min-width: 1024px) {
+      max-width: 32rem;
+      margin-bottom: 5rem;
+    }
+  }
+
+  .solutions__layout {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+
+    @media (min-width: 1024px) {
+      display: grid;
+      grid-template-columns: minmax(0, 32%) minmax(0, 1fr);
+      column-gap: 4rem;
+      align-items: start;
+    }
+
+    @media (min-width: 1280px) {
+      grid-template-columns: minmax(0, 36%) minmax(0, 1fr);
+      column-gap: 5rem;
+    }
+  }
+
+  .services-rail {
+    display: none;
+
+    @media (min-width: 1024px) {
+      display: block;
+      position: sticky;
+      top: 9rem;
+      align-self: start;
+
+      ol {
+        list-style: none;
+        padding: 0;
+        margin: 0;
       }
 
-      &:nth-of-type(2) {
-        top: calc(64px + 4vh);
+      li {
+        border-top: 1px dashed var(--border-color);
 
-        .sticky-card__content {
-          min-height: calc(100vh - 64px - 4vh);
+        &:last-child {
+          border-bottom: 1px dashed var(--border-color);
         }
+      }
+    }
+
+    &__entry {
+      display: grid;
+      grid-template-columns: 2.5rem minmax(0, 1fr);
+      column-gap: 1rem;
+      align-items: baseline;
+      padding: 1.25rem 0 1.25rem 1.25rem;
+      text-decoration: none;
+      color: var(--text-color);
+      opacity: 0.4;
+      transition: opacity 240ms cubic-bezier(0.22, 1, 0.36, 1);
+      position: relative;
+      cursor: pointer;
+      outline: none;
+
+      &:hover,
+      &:focus-visible {
+        opacity: 0.7;
+      }
+
+      &:focus-visible {
+        box-shadow: 0 0 0 3px var(--accent-color-5);
+        border-radius: var(--radius);
+      }
+
+      &[aria-current="true"] {
+        opacity: 1;
+
+        .services-rail__bar {
+          opacity: 1;
+        }
+      }
+    }
+
+    &__num {
+      font-family: "Manrope", sans-serif;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      color: var(--text-color-light);
+    }
+
+    &__title {
+      font-family: "Funnel Display", sans-serif;
+      font-size: 1.375rem;
+      font-weight: 700;
+      line-height: 1.2;
+      color: var(--primary);
+
+      @media (min-width: 1280px) {
+        font-size: 1.5rem;
+      }
+    }
+
+    &__bar {
+      position: absolute;
+      left: 0;
+      top: 50%;
+      width: 4px;
+      height: 1.5rem;
+      transform: translateY(-50%);
+      background: linear-gradient(180deg, var(--accent-color), var(--accent-dark));
+      opacity: 0;
+      transition: opacity 240ms cubic-bezier(0.22, 1, 0.36, 1);
+      border-radius: var(--radius);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .services-rail__entry,
+    .services-rail__bar {
+      transition: none;
+    }
+  }
+
+  .services-content {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .service-block {
+    padding: 0 0 3rem;
+    position: relative;
+
+    & + & {
+      border-top: 1px dashed var(--border-color);
+      padding-top: 3rem;
+    }
+
+    @media (min-width: 768px) {
+      padding-bottom: 5rem;
+
+      & + & {
+        padding-top: 5rem;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      padding-bottom: 8rem;
+
+      & + & {
+        border-top: none;
+        padding-top: 0;
+      }
+
+      &:last-child {
+        padding-bottom: 2rem;
+      }
+    }
+
+    &__ordinal {
+      display: none;
+
+      @media (min-width: 1024px) {
+        display: block;
+        font-family: "Manrope", sans-serif;
+        font-size: 0.8125rem;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        color: var(--text-color-light);
+        margin-bottom: 0.75rem;
+      }
+    }
+
+    &__title {
+      font-family: "Funnel Display", sans-serif;
+      font-size: 1.625rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: var(--primary);
+      margin: 0 0 1.5rem;
+      text-wrap-style: balance;
+
+      @media (min-width: 768px) {
+        font-size: 2rem;
+      }
+
+      @media (min-width: 1280px) {
+        font-size: 2.25rem;
+      }
+    }
+
+    &__lead {
+      margin-bottom: 2rem;
+
+      :global(p) {
+        font-size: 1rem;
+        font-weight: 600;
+        padding: 1rem 1.25rem;
+        margin: 0;
+        color: var(--text-color);
 
         @media (min-width: 768px) {
-          top: 16vh;
-
-          .sticky-card__content {
-            min-height: 84vh;
-          }
+          font-size: 1.0625rem;
+          padding: 1.25rem 1.5rem;
         }
       }
+    }
 
-      &:nth-of-type(3) {
-        top: calc(64px + 8vh);
+    &__body {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      align-items: stretch;
 
-        .sticky-card__content {
-          min-height: calc(100vh - 64px - 8vh);
-        }
-
-        @media (min-width: 768px) {
-          top: 22vh;
-
-          .sticky-card__content {
-            min-height: 78vh;
-          }
-        }
-      }
-
-      &:nth-of-type(4) {
-        top: calc(64px + 12vh);
-
-        .sticky-card__content {
-          min-height: calc(100vh - 64px - 12vh);
-        }
-
-        @media (min-width: 768px) {
-          top: 28vh;
-
-          .sticky-card__content {
-            min-height: 72vh;
-          }
-        }
-      }
-
-      &:nth-of-type(5) {
-        top: calc(64px + 16vh);
-
-        .sticky-card__content {
-          min-height: calc(100vh - 64px - 16vh);
-        }
-
-        @media (min-width: 768px) {
-          top: 34vh;
-
-          .sticky-card__content {
-            min-height: 66vh;
-          }
-        }
-      }
-
-      &__header {
-        display: flex;
-        align-items: center;
-        position: relative;
-        padding-left: 2rem;
-        height: 4vh;
-        background: linear-gradient(180deg, var(--background-darker), var(--background-light));
-        border-radius: calc(var(--radius) * 4) calc(var(--radius) * 4) 0 0;
-
-        @media (min-width: 768px) {
-          height: 6vh;
-        }
-
-        h3 {
-          font-size: 1rem;
-          color: var(--text-color);
-
-          @media (min-width: 1024px) {
-            font-size: 1.5rem;
-          }
-        }
-      }
-
-      &__content {
-        padding: 0.25rem 0.5rem;
-        display: flex;
-        flex-direction: column;
+      @media (min-width: 1024px) {
+        flex-direction: row;
         gap: 2rem;
-        background-color: var(--background-light);
-        overflow: auto;
+        align-items: flex-start;
+      }
+    }
 
-        p {
-          font-weight: bold;
-          font-size: 1rem;
-          padding: 1rem;
-          background-color: var(--background-light);
-          border-right: 1px dashed var(--border-color);
-          border-left: 1px dashed var(--border-color);
-          @media (min-width: 1024px) {
-            font-size: 1.125rem;
-          }
-        }
+    &__bullets {
+      list-style-type: square;
+      list-style-image: linear-gradient(45deg, var(--accent-color), var(--accent-dark));
+      padding-left: 1.25rem;
+      margin: 0;
+      flex: 1 1 auto;
 
-        .features-list, .features-image {
-          flex: 1 1 auto;
-          max-width: 100%;
-        }
+      @media (min-width: 1024px) {
+        flex: 1 1 60%;
+        max-width: 60%;
+      }
 
-        .features-image {
-          max-height: 20vh;
-          object-fit: cover;
-        }
-
-        .hologram-card {
-          height: 20vh;
-          min-height: unset;
-          border-radius: calc(var(--radius) * 4);
-
-          &::before {
-            mix-blend-mode: screen;
-          }
-
-          @media (min-width: 1024px) {
-            height: 50vh;
-          }
-        }
+      li {
+        margin-bottom: 0.625rem;
+        padding-left: 0.5rem;
+        font-size: 0.9375rem;
+        line-height: 1.55;
 
         @media (min-width: 768px) {
-          padding: 1rem 2rem 6rem;
-          gap: 1.5rem;
+          font-size: 1rem;
         }
 
         @media (min-width: 1024px) {
-          flex-direction: row;
-          align-items: center;
-          gap: 1.5rem;
-
-          .features-list {
-            flex: 1 1 70%;
-            max-width: 70%;
-          }
-
-          .features-image {
-            flex: 1 1 30%;
-            max-width: 30%;
-            max-height: 50vh;
-          }
+          font-size: 1.0625rem;
         }
       }
+    }
 
-      .features-list {
-        padding: 0 0.5rem 0 1rem;
-        order: 2;
+    &__visual {
+      flex: 1 1 auto;
 
-        @media (min-width: 1024px) {
-          order: 0;
-          padding: 0 2rem 0 4rem;
-        }
-
-        ul {
-          list-style-type: square;
-          list-style-image: linear-gradient(45deg, var(--accent-color), var(--accent-dark));
-          margin-top: 1rem;
-          padding-left: 1.25rem;
-
-          @media (min-width: 1024px) {
-            margin-top: 2rem;
-          }
-
-          li {
-            margin-bottom: 0.5rem;
-            position: relative;
-            font-size: 0.875rem;
-            padding-left: 0.5rem;
-
-            @media (min-width: 1024px) {
-              font-size: 1.15rem;
-            }
-          }
-        }
+      @media (min-width: 1024px) {
+        flex: 1 1 40%;
+        max-width: 40%;
       }
+    }
+
+    .hologram-card {
+      height: 18rem;
+      min-height: unset;
+      border-radius: calc(var(--radius) * 4);
+
+      &::before {
+        mix-blend-mode: screen;
+      }
+
+      @media (min-width: 1024px) {
+        height: 22rem;
+      }
+    }
+
+    &__note {
+      display: block;
+      margin-top: 1.5rem;
+      color: var(--text-color-light);
+      font-size: 0.8125rem;
+      line-height: 1.5;
     }
   }
 </style>

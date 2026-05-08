@@ -34,10 +34,9 @@ strong {
   font-weight: 600;
 }
 
-.gradient-text {
-  background: linear-gradient(90deg, var(--accent-color), var(--accent-dark));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+.text-accent {
+  color: var(--accent-text);
+  font-weight: 800;
 }
 
 .font-bold {
