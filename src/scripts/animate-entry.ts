@@ -20,26 +20,33 @@ export function animateEntry({
   staggerDelay = 0.15,
   y = 50,
 }: AnimateEntryOptions) {
-  const elements = [
-    ...document.querySelectorAll<HTMLElement>(
-      `${container} [data-animate-entry]`,
-    ),
-  ];
-  if (!elements.length) return;
+  const containers = [...document.querySelectorAll<HTMLElement>(container)];
+  if (!containers.length) return;
 
-  inView(
-    container,
-    () => {
-      animate(
-        elements,
-        { opacity: [0, 1], y: [y, 0] },
-        {
-          ease: [0.215, 0.61, 0.355, 1] as const,
-          duration,
-          delay: stagger(staggerDelay),
-        },
-      );
-    },
-    { amount },
-  );
+  for (const root of containers) {
+    const elements = [
+      ...(root.matches("[data-animate-entry]") ? [root] : []),
+      ...root.querySelectorAll<HTMLElement>("[data-animate-entry]"),
+    ];
+    if (!elements.length) continue;
+
+    inView(
+      root,
+      () => {
+        if (root.dataset.entryAnimated === "true") return;
+        root.dataset.entryAnimated = "true";
+
+        animate(
+          elements,
+          { opacity: [0, 1], y: [y, 0] },
+          {
+            ease: [0.215, 0.61, 0.355, 1] as const,
+            duration,
+            delay: stagger(staggerDelay),
+          },
+        );
+      },
+      { amount },
+    );
+  }
 }
