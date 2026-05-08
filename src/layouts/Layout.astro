@@ -24,6 +24,9 @@ const ogImageUrl = new URL(ogImage, siteUrl).href;
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
+		<script is:inline>
+			document.documentElement.classList.add('js');
+		</script>
 
 		<!-- Primary Meta Tags -->
 		<title>{fullTitle}</title>
@@ -93,10 +96,16 @@ const ogImageUrl = new URL(ogImage, siteUrl).href;
 	</body>
 </html>
 
-<style>
+<style is:global>
 	html,
 	body {
 		margin: 0;
 		width: 100%;
+	}
+
+	html.js [data-animate-entry] {
+		opacity: 0;
+		transform: translate3d(0, var(--entry-offset, 50px), 0);
+		will-change: opacity, transform;
 	}
 </style>

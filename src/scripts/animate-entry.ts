@@ -30,6 +30,10 @@ export function animateEntry({
     ];
     if (!elements.length) continue;
 
+    for (const element of elements) {
+      element.style.setProperty("--entry-offset", `${y}px`);
+    }
+
     inView(
       root,
       () => {
@@ -38,7 +42,7 @@ export function animateEntry({
 
         animate(
           elements,
-          { opacity: [0, 1], y: [y, 0] },
+          { opacity: 1, y: 0 },
           {
             ease: [0.215, 0.61, 0.355, 1] as const,
             duration,
